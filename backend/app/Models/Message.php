@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Message extends Model
 {
+    protected $fillable = [
+        'from',
+        'content',
+    ];
+
     protected $casts = [
         'from' => MessageFrom::class,
     ];

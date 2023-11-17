@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatSessionApiController;
+use App\Http\Controllers\MessageApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('sessions', ChatSessionApiController::class)
+Route::apiResource('chat-sessions', ChatSessionApiController::class)
+    ->only('store');
+
+Route::apiResource('chat-sessions.messages', MessageApiController::class)
     ->only('store');

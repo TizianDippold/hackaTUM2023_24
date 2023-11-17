@@ -12,6 +12,8 @@ class ChatSessionApiController extends Controller
     }
 
     /**
+     * Create chat session
+     *
      * @apiResource App\Http\Resources\ChatSessionResource
      *
      * @apiResourceModel App\Models\ChatSession

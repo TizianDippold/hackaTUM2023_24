@@ -4,13 +4,13 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/sessions
+    uri: api/chat-sessions
     metadata:
       groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Create chat session'
       description: ''
       authenticated: false
       custom: []
@@ -28,6 +28,60 @@ endpoints:
       -
         status: 200
         content: '{"data":{"id":1}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/chat-sessions/{chat_session_id}/messages'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Send chat message'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      chat_session_id:
+        name: chat_session_id
+        description: 'The ID of the chat session.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      chat_session_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      message:
+        name: message
+        description: 'Must be at least 1 character.'
+        required: true
+        example: urnsxznsxomzmejtnukovaomsznibvjtqelcu
+        type: string
+        enumValues: []
+        custom: []
+    cleanBodyParameters:
+      message: urnsxznsxomzmejtnukovaomsznibvjtqelcu
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":1,"chat_session_id":2,"from":"system","content":"mqjxw"}}'
         headers: []
         description: ''
         custom: []
