@@ -5,9 +5,8 @@ import React, {useState} from 'react';
 
 export default function ChatbotComponent() {
     const [userInput, setUserInput] = useState('');
-    const chatMsgs = ['How can I help you today?']
     let chatId = 1;
-    const [chatList, chatSetList] = React.useState(chatMsgs);
+    const [chatList, chatSetList] = useState(['How can I help you today?']);
 
     const url = 'https://hackatum23.moremaier.com/api/chat-sessions';
 
@@ -40,23 +39,13 @@ export default function ChatbotComponent() {
     };
 
     const handleButtonClick = async () => {
-        console.log('Sending user input:', userInput);
-        const newList = chatList.concat(userInput);
-        chatSetList(newList);
-        console.log("test1: " + chatList);
+        chatSetList(prevState => prevState.concat(userInput));
+
         const responseData =  await fetchChatResponse(userInput);
         const botMsg = responseData['data']['content'];
-        console.log("test2: " + botMsg);
+
         setUserInput('');
-
-        console.log(chatList);
-        const newListBot = chatList.concat(botMsg);
-        chatSetList(prevState => {prevState.concat(newListBot)});
-        console.log(chatList);
-
-        // if (responseData.chat_session.finalized) {
-        //
-        // }
+        chatSetList(prevState => prevState.concat(botMsg));
     };
 
     return (
