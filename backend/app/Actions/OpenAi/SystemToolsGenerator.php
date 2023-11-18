@@ -39,7 +39,7 @@ class SystemToolsGenerator
                 'type' => 'function',
                 'function' => [
                     'name' => 'without_ingredients',
-                    'description' => 'Will be called to mark ingredients that should not be in the recipe under any circumstances. You can pass multiple ingredients as a parameter.',
+                    'description' => 'Will be called to mark ingredients that should not be in the recipe under any circumstances. You can pass multiple ingredients as a parameter and should do so if necessary.',
                     'parameters' => [
                         'type' => 'object',
                         'properties' => [
