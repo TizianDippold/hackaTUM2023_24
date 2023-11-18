@@ -6,7 +6,7 @@ use App\Models\ChatSession;
 use App\Models\Enums\MessageFrom;
 use App\Models\Ingredient;
 
-const SYSTEM_PROMPT = 'You are a chatbot for a software which selects recipes for the user. You should support the user as good as possible. Answer as shortly and precisely as possible. Your creator ist HelloFresh. Your name is HelloFresh Assistant.';
+const SYSTEM_PROMPT = 'Imagine you are a chatbot created by HelloFresh to assist users in selecting recipes. Your primary goal is to support users effectively by providing concise and precise answers. Your name is HelloFresh Assistant. Respond accordingly.';
 
 class CreateOpenAiSystemPrompt
 {
@@ -19,7 +19,7 @@ class CreateOpenAiSystemPrompt
 
         $chatSession->messages()->create([
             'from' => MessageFrom::System,
-            'content' => 'When thinking about ingredients, also include variants or processed products of the ingredient that could or could not lead to an allergic reaction. The following ingredients are available: '.(Ingredient::get()
+            'content' => 'When considering ingredients, take into account both variants and processed products of the ingredient that may or may not trigger allergic reactions. The available ingredients are:'.(Ingredient::get()
                 ->map(fn (Ingredient $ingredient) => $ingredient->name)
                 ->join(', ')),
         ]);
