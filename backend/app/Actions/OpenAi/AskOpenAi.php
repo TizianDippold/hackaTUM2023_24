@@ -19,6 +19,8 @@ const OPENAI_ROLE_TOOL = 'tool';
 // Only gpt-3.5-turbo-1106 supports parallel function calling if needed
 const SYSTEM_MODEL = 'gpt-4-1106-preview';
 
+const MAX_TRIES = 5;
+
 class AskOpenAi
 {
     /**
@@ -96,12 +98,21 @@ class AskOpenAi
 
     private function createChatCompletion(): CreateResponse
     {
-        return OpenAI::chat()->create([
-            'model' => SYSTEM_MODEL,
-            'messages' => array_merge($this->oldMessages, $this->newMessages),
-            'max_tokens' => OPENAI_MAX_TOKENS,
-            'tools' => $this->toolsGenerator->generate(),
-        ]);
+        $tries = 0;
+        while ($tries < MAX_TRIES) {
+            try {
+                return OpenAI::chat()->create([
+                    'model' => SYSTEM_MODEL,
+                    'messages' => array_merge($this->oldMessages, $this->newMessages),
+                    'max_tokens' => OPENAI_MAX_TOKENS,
+                    'tools' => $this->toolsGenerator->generate(),
+                ]);
+            } catch (\OpenAI\Exceptions\ErrorException) {
+                $tries++;
+            }
+        }
+
+        abort(500, 'OpenAI API is not available');
     }
 
     /**
