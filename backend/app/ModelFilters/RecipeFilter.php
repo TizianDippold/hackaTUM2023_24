@@ -20,11 +20,11 @@ class RecipeFilter extends ModelFilter
     {
         if ($value === 'true' || $value === true) {
             return $this->whereDoesntHave('ingredients', function ($query) {
-                $query->where('is_vegan', true)->where('is_vegetarian', true);
+                $query->where('is_vegan', false);
             });
         } elseif ($value === 'false' || $value === false) {
             return $this->whereHas('ingredients', function ($query) {
-                $query->where('is_vegan', false)->orWhere('is_vegetarian', false);
+                $query->where('is_vegan', false);
             });
         }
 
@@ -35,7 +35,7 @@ class RecipeFilter extends ModelFilter
     {
         if ($value === 'true' || $value === true) {
             return $this->whereDoesntHave('ingredients', function ($query) {
-                $query->where('is_vegetarian', true);
+                $query->where('is_vegetarian', false);
             });
         } elseif ($value === 'false' || $value === false) {
             return $this->whereHas('ingredients', function ($query) {
