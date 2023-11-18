@@ -31,6 +31,21 @@ class SystemToolsGenerator
                                 'type' => 'boolean',
                                 'description' => 'true if the recipe should be sustainable.',
                             ],
+
+                            'fast_preptime' => [
+                                'type' => 'boolean',
+                                'description' => 'true if the recipe should be fast or short to prepare.',
+                            ],
+
+                            'low_sugar' => [
+                                'type' => 'boolean',
+                                'description' => 'true if the recipe should be low in sugar.',
+                            ],
+
+                            'high_protein' => [
+                                'type' => 'boolean',
+                                'description' => 'true if the recipe should be high in protein.',
+                            ],
                         ],
                     ],
                 ],

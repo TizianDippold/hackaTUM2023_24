@@ -55,6 +55,33 @@ class RecipeFilter extends ModelFilter
         return $this;
     }
 
+    public function fastPreptime($value)
+    {
+        if ($value) {
+            return $this->where('preptime', '<=', 30);
+        }
+
+        return $this;
+    }
+
+    public function lowSugar($value)
+    {
+        if ($value) {
+            return $this->where('sugar', '<=', 6);
+        }
+
+        return $this;
+    }
+
+    public function highProtein($value)
+    {
+        if ($value) {
+            return $this->where('protein', '>=', 25);
+        }
+
+        return $this;
+    }
+
     public function withoutIngredient($value)
     {
         if (is_array($value)) {
