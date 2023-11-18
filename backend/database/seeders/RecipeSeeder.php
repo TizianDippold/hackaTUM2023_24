@@ -19,7 +19,7 @@ class RecipeSeeder extends Seeder
         foreach ($ingredients as $ingredient) {
             $ingredient_id = Ingredient::firstOrCreate($ingredient)->id;
 
-            DB::table('recipes_ingredients')->insert([
+            DB::table('ingredient_recipe')->insert([
                 'recipe_id' => $recipe_id,
                 'ingredient_id' => $ingredient_id,
             ]);
@@ -28,7 +28,7 @@ class RecipeSeeder extends Seeder
         foreach ($tags as $tag) {
             $tag_id = Tag::firstOrCreate($tag)->id;
 
-            DB::table('recipes_tags')->insert([
+            DB::table('recipe_tag')->insert([
                 'recipe_id' => $recipe_id,
                 'tag_id' => $tag_id,
             ]);

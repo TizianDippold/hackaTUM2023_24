@@ -60,12 +60,12 @@ endpoints:
         name: chat_session_id
         description: 'The ID of the chat session.'
         required: true
-        example: 7
+        example: 6
         type: integer
         enumValues: []
         custom: []
     cleanUrlParameters:
-      chat_session_id: 7
+      chat_session_id: 6
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -73,12 +73,12 @@ endpoints:
         name: message
         description: 'Must be at least 1 character.'
         required: true
-        example: pciwxlnnsupaxxrcbahudvxvntoe
+        example: sidqkwhlbiieilguemyydjuynhtzyjcwedmlehpyjnujrjbqsbaosxvomcubccnvktgmaxolezbuqjdwiaquw
         type: string
         enumValues: []
         custom: []
     cleanBodyParameters:
-      message: pciwxlnnsupaxxrcbahudvxvntoe
+      message: sidqkwhlbiieilguemyydjuynhtzyjcwedmlehpyjnujrjbqsbaosxvomcubccnvktgmaxolezbuqjdwiaquw
     fileParameters: []
     responses:
       -
@@ -119,7 +119,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"id":1,"name":"Harissa chicken on quinoa with green olives","headline":"This dish produces 50% less CO2e from ingredients than an average HelloFresh recipe","instructions":"Create a flavorful Harissa Chicken on Quinoa with Green Olives by marinating and searing the chicken. Cook quinoa separately, mix with green olives, and plate the dish for a visually appealing meal.","preptime":"PT25M","image":"https:\/\/img.hellofresh.com\/q_auto\/recipes\/image\/HF_Y23_R37_W44_DE_R4819-1_Main_low-661e95c9.jpg","calories":606,"carbs":52.54,"fat":30,"protein":38.4,"sugar":5.6,"sustainability_rating":0.85,"created_at":null,"updated_at":null}]}'
+        content: '{"data":[{"id":1,"name":"Harissa chicken on quinoa with green olives","headline":"This dish produces 50% less CO2e from ingredients than an average HelloFresh recipe","instructions":"Create a flavorful Harissa Chicken on Quinoa with Green Olives by marinating and searing the chicken. Cook quinoa separately, mix with green olives, and plate the dish for a visually appealing meal.","preptime":25,"image":"https:\/\/img.hellofresh.com\/q_auto\/recipes\/image\/HF_Y23_R37_W44_DE_R4819-1_Main_low-661e95c9.jpg","calories":606,"carbs":52.54,"fat":30,"protein":38.4,"sugar":5.6,"sustainability_rating":0.85,"created_at":null,"updated_at":null}]}'
         headers: []
         description: ''
         custom: []
@@ -164,7 +164,97 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":{"id":1,"name":"Harissa chicken on quinoa with green olives","headline":"This dish produces 50% less CO2e from ingredients than an average HelloFresh recipe","instructions":"Create a flavorful Harissa Chicken on Quinoa with Green Olives by marinating and searing the chicken. Cook quinoa separately, mix with green olives, and plate the dish for a visually appealing meal.","preptime":"PT25M","image":"https:\/\/img.hellofresh.com\/q_auto\/recipes\/image\/HF_Y23_R37_W44_DE_R4819-1_Main_low-661e95c9.jpg","calories":606,"carbs":52.54,"fat":30,"protein":38.4,"sugar":5.6,"sustainability_rating":0.85,"created_at":null,"updated_at":null}}'
+        content: '{"data":{"id":1,"name":"Harissa chicken on quinoa with green olives","headline":"This dish produces 50% less CO2e from ingredients than an average HelloFresh recipe","instructions":"Create a flavorful Harissa Chicken on Quinoa with Green Olives by marinating and searing the chicken. Cook quinoa separately, mix with green olives, and plate the dish for a visually appealing meal.","preptime":25,"image":"https:\/\/img.hellofresh.com\/q_auto\/recipes\/image\/HF_Y23_R37_W44_DE_R4819-1_Main_low-661e95c9.jpg","calories":606,"carbs":52.54,"fat":30,"protein":38.4,"sugar":5.6,"sustainability_rating":0.85,"created_at":null,"updated_at":null}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/recipes/{recipe_id}/tags'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get all tags of a recipe from the database'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      recipe_id:
+        name: recipe_id
+        description: 'The ID of the recipe.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      recipe_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":1,"name":"Low Calorie","created_at":"2023-11-18T14:23:41.000000Z","updated_at":"2023-11-18T14:23:41.000000Z"}]}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/recipes/{recipe_id}/ingredients'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get all ingredients of a recipe from the database'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      recipe_id:
+        name: recipe_id
+        description: 'The ID of the recipe.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      recipe_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":1,"name":"Chicken Breast","is_vegan":0,"is_vegetarian":0,"created_at":"2023-11-18T14:23:41.000000Z","updated_at":"2023-11-18T14:23:41.000000Z"}]}'
         headers: []
         description: ''
         custom: []

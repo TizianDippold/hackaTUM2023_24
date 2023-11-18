@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ChatSessionApiController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\MessageApiController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +26,7 @@ Route::apiResource('chat-sessions.messages', MessageApiController::class)
 
 Route::apiResource('recipes', RecipeController::class)
     ->only('index', 'show');
+Route::apiResource('recipes.tags', TagController::class)
+    ->only('index');
+Route::apiResource('recipes.ingredients', IngredientController::class)
+    ->only('index');
