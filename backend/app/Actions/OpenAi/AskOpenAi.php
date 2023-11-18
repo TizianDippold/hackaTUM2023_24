@@ -17,29 +17,6 @@ const OPENAI_ROLE_TOOL = 'tool';
 
 // Only gpt-3.5-turbo-1106 supports parallel function calling if needed
 const SYSTEM_MODEL = 'gpt-3.5-turbo-1106';
-const SYSTEM_TOOLS = [
-    [
-        'type' => 'function',
-        'function' => [
-            'name' => 'filtern',
-            'description' => 'Wird aufgerufen, um die Rezeptauswahl des Nutzers zu filtern.',
-            'parameters' => [
-                'type' => 'object',
-                'properties' => [
-                    'vegan' => [
-                        'type' => 'boolean',
-                        'description' => 'true, wenn der Nutzer nur vegane Gerichte angezeigt bekommen will.',
-                    ],
-
-                    'max_calories' => [
-                        'type' => 'number',
-                        'description' => 'Die maximale Anzahl an Kalorien, die ein Gericht haben darf.',
-                    ],
-                ],
-            ],
-        ],
-    ],
-];
 
 class AskOpenAi
 {
@@ -54,8 +31,12 @@ class AskOpenAi
 
     private ?Message $lastCreatedMessage = null;
 
-    public function __construct(private readonly OpenAiMessageTransformer $messageTransformer, Collection $history)
-    {
+    public function __construct(
+        private readonly OpenAiMessageTransformer $messageTransformer,
+        private readonly SystemToolsGenerator $toolsGenerator,
+        private readonly ChatSession $chatSession,
+        Collection $history
+    ) {
         $this->history = $history;
     }
 
@@ -117,7 +98,7 @@ class AskOpenAi
             'model' => SYSTEM_MODEL,
             'messages' => array_merge($this->oldMessages, $this->newMessages),
             'max_tokens' => OPENAI_MAX_TOKENS,
-            'tools' => SYSTEM_TOOLS,
+            'tools' => $this->toolsGenerator->generate(),
         ]);
     }
 
@@ -141,9 +122,20 @@ class AskOpenAi
         }
     }
 
-    private function handleToolCall(string $functionName, array $args): mixed
+    private function handleToolCall(string $functionName, array $args): string
     {
-        // TODO
+        if ($functionName === 'filter') {
+            // Merge filter arguments with the chat session filter
+            $this->chatSession->filter = array_merge($this->chatSession->filter->toArray(), $args);
+            $this->chatSession->save();
+        } elseif ($functionName === 'without_ingredients') {
+            $this->chatSession->filter['without_ingredients'] = array_merge(
+                $this->chatSession->filter['without_ingredients'] ?? [],
+                $args['ingredients'],
+            );
+            $this->chatSession->save();
+        }
+
         return '';
     }
 

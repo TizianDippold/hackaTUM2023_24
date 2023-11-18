@@ -13,6 +13,7 @@ class SendMessage
         $chatSession->load('messages');
 
         $asker = app(AskOpenAi::class, [
+            'chatSession' => $chatSession,
             'history' => $chatSession->messages,
         ]);
 
