@@ -18,6 +18,6 @@ class ChatSession extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class)
-            ->orderBy('created_at', 'asc');
+            ->orderBy('id', 'asc');
     }
 }
