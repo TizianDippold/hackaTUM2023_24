@@ -84,6 +84,51 @@ endpoints:
     custom: []
   -
     httpMethods:
+      - GET
+    uri: 'api/chat-sessions/{chatSession_id}/results'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get chat session results'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      chatSession_id:
+        name: chatSession_id
+        description: 'The ID of the chatSession.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      chatSession_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":1,"name":"Harissa chicken on quinoa with green olives","headline":"This dish produces 50% less CO2e from ingredients than an average HelloFresh recipe","instructions":"Create a flavorful Harissa Chicken on Quinoa with Green Olives by marinating and searing the chicken. Cook quinoa separately, mix with green olives, and plate the dish for a visually appealing meal.","preptime":25,"image":"https:\/\/img.hellofresh.com\/q_auto\/recipes\/image\/HF_Y23_R37_W44_DE_R4819-1_Main_low-661e95c9.jpg","calories":606,"carbs":52.54,"fat":30,"protein":38.4,"sugar":5.6,"sustainability_rating":0.85,"created_at":null,"updated_at":null}]}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
       - POST
     uri: 'api/chat-sessions/{chat_session_id}/messages'
     metadata:
@@ -116,12 +161,12 @@ endpoints:
         name: message
         description: 'Must be at least 1 character.'
         required: true
-        example: irqzpujbdjjxrxafivmytoifjygwonzoddazzxgkjqxhmvvpbxnkiphmbpq
+        example: jxjiutwpooknnvlutgixpfryxtbvjzduyjgclqhloaxqorrxhprmoxwajfmgafjojccwsyslkcugq
         type: string
         enumValues: []
         custom: []
     cleanBodyParameters:
-      message: irqzpujbdjjxrxafivmytoifjygwonzoddazzxgkjqxhmvvpbxnkiphmbpq
+      message: jxjiutwpooknnvlutgixpfryxtbvjzduyjgclqhloaxqorrxhprmoxwajfmgafjojccwsyslkcugq
     fileParameters: []
     responses:
       -

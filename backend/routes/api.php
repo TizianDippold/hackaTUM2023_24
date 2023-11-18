@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('chat-sessions', ChatSessionApiController::class)
     ->only('store');
 Route::post('chat-sessions/{chatSession}/finalize', [ChatSessionApiController::class, 'finalize']);
+Route::get('chat-sessions/{chatSession}/results', [ChatSessionApiController::class, 'getResults']);
 
 Route::apiResource('chat-sessions.messages', MessageApiController::class)
     ->only('store');
