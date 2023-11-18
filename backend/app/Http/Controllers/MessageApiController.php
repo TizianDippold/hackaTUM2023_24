@@ -24,6 +24,6 @@ class MessageApiController extends Controller
     {
         $answer = $this->sendMessage->send($chatSession, $request->validated('message'));
 
-        return new MessageResource($answer);
+        return new MessageResource($answer->load('chatSession'));
     }
 }

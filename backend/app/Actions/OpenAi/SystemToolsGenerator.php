@@ -60,6 +60,17 @@ class SystemToolsGenerator
                     ],
                 ],
             ],
+            [
+                'type' => 'function',
+                'function' => [
+                    'name' => 'finish',
+                    'description' => 'Will be called to finish the recipe selection of the user.',
+                    'parameters' => [
+                        'type' => 'object',
+                        'properties' => json_decode('{}'),
+                    ],
+                ],
+            ],
         ];
     }
 }

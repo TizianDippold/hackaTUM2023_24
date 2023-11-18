@@ -27,7 +27,52 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":{"id":null}}'
+        content: '{"data":{"id":1,"finalized":false}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/chat-sessions/{chatSession_id}/finalize'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Finalize chat session'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      chatSession_id:
+        name: chatSession_id
+        description: 'The ID of the chatSession.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      chatSession_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":1,"finalized":false}}'
         headers: []
         description: ''
         custom: []
@@ -58,12 +103,12 @@ endpoints:
         name: chat_session_id
         description: 'The ID of the chat session.'
         required: true
-        example: 6
+        example: 1
         type: integer
         enumValues: []
         custom: []
     cleanUrlParameters:
-      chat_session_id: 6
+      chat_session_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -71,17 +116,17 @@ endpoints:
         name: message
         description: 'Must be at least 1 character.'
         required: true
-        example: sidqkwhlbiieilguemyydjuynhtzyjcwedmlehpyjnujrjbqsbaosxvomcubccnvktgmaxolezbuqjdwiaquw
+        example: irqzpujbdjjxrxafivmytoifjygwonzoddazzxgkjqxhmvvpbxnkiphmbpq
         type: string
         enumValues: []
         custom: []
     cleanBodyParameters:
-      message: sidqkwhlbiieilguemyydjuynhtzyjcwedmlehpyjnujrjbqsbaosxvomcubccnvktgmaxolezbuqjdwiaquw
+      message: irqzpujbdjjxrxafivmytoifjygwonzoddazzxgkjqxhmvvpbxnkiphmbpq
     fileParameters: []
     responses:
       -
         status: 200
-        content: '{"data":{"id":null,"chat_session_id":null,"from":null,"content":null}}'
+        content: '{"data":{"id":1,"chat_session_id":1,"from":"system","content":"You are a chatbot for a software which selects recipes for the user. You should support the user as good as possible. Answer as shortly and precisely as possible. Your creator ist HelloFresh. Your name is HelloFresh Assistant."}}'
         headers: []
         description: ''
         custom: []
@@ -207,7 +252,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"id":1,"name":"Low Calorie","created_at":"2023-11-18T14:23:41.000000Z","updated_at":"2023-11-18T14:23:41.000000Z"}]}'
+        content: '{"data":[{"id":1,"name":"Low Calorie","created_at":"2023-11-18T16:00:43.000000Z","updated_at":"2023-11-18T16:00:43.000000Z"}]}'
         headers: []
         description: ''
         custom: []
@@ -252,7 +297,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"id":1,"name":"Chicken Breast","is_vegan":0,"is_vegetarian":0,"created_at":"2023-11-18T14:23:41.000000Z","updated_at":"2023-11-18T14:23:41.000000Z"}]}'
+        content: '{"data":[{"id":1,"name":"Chicken Breast","is_vegan":0,"is_vegetarian":0,"created_at":"2023-11-18T16:00:43.000000Z","updated_at":"2023-11-18T16:00:43.000000Z"}]}'
         headers: []
         description: ''
         custom: []

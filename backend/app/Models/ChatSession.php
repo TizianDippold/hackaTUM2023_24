@@ -12,6 +12,7 @@ class ChatSession extends Model
 
     protected $casts = [
         'filter' => AsArrayObject::class,
+        'finalized' => 'boolean',
     ];
 
     public function messages(): HasMany

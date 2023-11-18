@@ -2,6 +2,7 @@
 
 namespace App\Actions\OpenAi;
 
+use App\Actions\ChatSessions\FinalizeChatSession;
 use App\Models\ChatSession;
 use App\Models\Message;
 use Illuminate\Database\Eloquent\Collection;
@@ -34,6 +35,7 @@ class AskOpenAi
     public function __construct(
         private readonly OpenAiMessageTransformer $messageTransformer,
         private readonly SystemToolsGenerator $toolsGenerator,
+        private readonly FinalizeChatSession $finalizeChatSession,
         private readonly ChatSession $chatSession,
         Collection $history
     ) {
@@ -134,6 +136,8 @@ class AskOpenAi
                 $args['ingredients'],
             );
             $this->chatSession->save();
+        } elseif ($functionName === 'finish') {
+            $this->finalizeChatSession->finalize($this->chatSession);
         }
 
         return '';
