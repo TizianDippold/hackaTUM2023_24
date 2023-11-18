@@ -17,39 +17,41 @@ export default function ChatbotComponent() {
         console.log('Sending user input:', userInput);
         const newList = chatList.concat(userInput);
         chatSetList(newList);
-        console.log(chatList);
-        console.log(chatMsgs);
         setUserInput('');
+        console.log(chatList);
     };
 
     return (
-        <div className="flex flex-col h-screen bg-gray-50">
-                <div className="flex items-center justify-between bg-green-400 p-8"></div>
-                <div className="flex flex-col space-y-2 p-4">
-                    <ul>
-                        {chatList.map((element, index) => {
-                            if (index % 2 === 0) {
-                                return <MessageComponentBot textToDisplay={chatList[index]} />;
-                            } else {
-                                return <MessageComponentUser textToDisplay={chatList[index]} />;
-                            }
-                        })}
-                    </ul>
-                </div>
-            <div className="flex items-center bottom-0 bg-gray-200 p-4 absolute bottom-0 w-screen">
+        <>
+            <div className="flex flex-col h-screen bg-gray-50">
+                    <div className="flex items-center justify-between bg-green-400 p-8"></div>
+                    <div className="flex flex-col space-y-2 p-4">
+                        <ul>
+                            {chatList.map((element, index) => {
+                                if (index % 2 === 0) {
+                                    return <MessageComponentBot key={`bot-${index}`} textToDisplay={element} />;
+                                } else {
+                                    return <MessageComponentUser key={`user-${index}`} textToDisplay={element} />;
+                                }
+                            })}
+                        </ul>
+                    </div>
+            </div>
+            <div className="flex items-center justify-end bg-gray-200 p-4 absolute bottom-0 w-screen">
                 <div className="">
                     <input
                         type="text"
                         value={userInput}
                         onChange={handleInputChange}
-                        placeholder="Type your message..."
-                        className=""
+                        placeholder="Food..."
+                        className="bg-gray-200 px-2 py-1 mr-14"
                     />
-                    <Button onClick={handleButtonClick} className="">
+
+                    <Button onClick={handleButtonClick} className="right-1">
                         Send
                     </Button>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
