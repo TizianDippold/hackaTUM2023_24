@@ -1,35 +1,20 @@
-import { Button, Input } from "@material-tailwind/react";
+import {Button} from "@material-tailwind/react";
 import MessageComponentBot from "@/components/messageComponentBot";
 import MessageComponentUser from "@/components/messageComponentUser";
-import React, {useEffect, useState} from 'react';
-import Image from "next/image";
-import {fetch} from "next/dist/compiled/@edge-runtime/primitives";
+import React, {useState} from 'react';
 
 export default function ChatbotComponent() {
     const [userInput, setUserInput] = useState('');
     const chatMsgs = ['How can I help you today?']
-    let botMsg = '';
-    let chatId = 0;
+    let chatId = 1;
     const [chatList, chatSetList] = React.useState(chatMsgs);
 
-    const url = 'https://hackatum23.moremaier.com/api/chat-sessions/'
+    const url = 'https://hackatum23.moremaier.com/api/chat-sessions';
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            });
-        };
-
-        fetchData();
-    }, []);
 
     const fetchChatResponse = async () => {
         try {
-            const response = await fetch('{url}/', {
+            const response = await fetch(`${url}/${chatId}/messages`, {
                 method: "POST",
                 body: JSON.stringify({
                     message: userInput,
@@ -43,8 +28,7 @@ export default function ChatbotComponent() {
                 throw new Error('Network response was not ok');
             }
 
-            const chatbotAnswerData = await response.json();
-            return chatbotAnswerData.data.content;
+            return await response.json();
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -55,15 +39,24 @@ export default function ChatbotComponent() {
         setUserInput(e.target.value);
     };
 
-    const handleButtonClick = () => {
+    const handleButtonClick = async () => {
         console.log('Sending user input:', userInput);
         const newList = chatList.concat(userInput);
         chatSetList(newList);
-        botMsg = fetchChatResponse(userInput);
+        console.log("test1: " + chatList);
+        const responseData =  await fetchChatResponse(userInput);
+        const botMsg = responseData['data']['content'];
+        console.log("test2: " + botMsg);
         setUserInput('');
 
-        chatList.concat(botMsg);
         console.log(chatList);
+        const newListBot = chatList.concat(botMsg);
+        chatSetList(prevState => {prevState.concat(newListBot)});
+        console.log(chatList);
+
+        // if (responseData.chat_session.finalized) {
+        //
+        // }
     };
 
     return (

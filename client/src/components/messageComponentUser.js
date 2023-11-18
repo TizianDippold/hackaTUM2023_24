@@ -4,7 +4,7 @@ export default function MessageComponentUser(props) {
 
     return(
         <div className="flex justify-end">
-            <div className="bg-green-400 text-white rounded-lg p-4 max-w-xs">
+            <div className="bg-greenPastel text-white rounded-lg p-2.5 max-w-xs">
                 <div className="text-white text-xs font-normal font-['Inter']">{textToDisplay}</div>
             </div>
         </div>
