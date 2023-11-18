@@ -40,7 +40,7 @@ class RecipeSeeder extends Seeder
         $current_recipe = [
             'name' => 'Harissa chicken on quinoa with green olives',
             'headline' => 'This dish produces 50% less CO2e from ingredients than an average HelloFresh recipe',
-            'preptime' => '25M',
+            'preptime' => '25',
             'instructions' => 'Create a flavorful Harissa Chicken on Quinoa with Green Olives by marinating and searing the chicken. Cook quinoa separately, mix with green olives, and plate the dish for a visually appealing meal.',
             'image' => 'https://img.hellofresh.com/q_auto/recipes/image/HF_Y23_R37_W44_DE_R4819-1_Main_low-661e95c9.jpg',
             'calories' => 606,
