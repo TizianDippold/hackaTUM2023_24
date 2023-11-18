@@ -70,11 +70,11 @@ const RecipeRating = () => {
                     src="https://img.hellofresh.com/f_auto,fl_lossy,q_auto/hellofresh_website/us/landing-pages/b2b/Hello_Fresh_White_Lockup_CMYK.png"
                     className="rounded-sm object-cover h-31 mt-10 "/>
 
-                <span className="mt-10 font-bold text-xl">Help us get to know you better</span>
+                <span className="mt-10 font-bold text-xl text-active">Help us get to know you better</span>
                 <span>Sort recipes based on your preferences</span>
             </div>
-            <div className="grid grid-cols-2 gap-10 p-5">
-                {recipes.map(recipe => (
+            <div className="grid grid-cols-2 gap-5 p-5">
+                {recipes && recipes.map(recipe => (
                     <Card recipe={recipe} onSelect={() => handleCardSelect(recipe)}
                           isSelected={selectedCards.some((selected) => selected.id === recipe.id)}/>
                 ))}
