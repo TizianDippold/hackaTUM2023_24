@@ -2,11 +2,12 @@
 
 namespace App\Actions\OpenAi;
 
-use App\Models\Enums\MessageFrom;
+use App\Models\ChatSession;
 use App\Models\Message;
 use Illuminate\Database\Eloquent\Collection;
 use OpenAI\Laravel\Facades\OpenAI;
 use OpenAI\Responses\Chat\CreateResponse;
+use OpenAI\Responses\Chat\CreateResponseToolCall;
 
 const OPENAI_MAX_TOKENS = 256;
 const OPENAI_ROLE_SYSTEM = 'system';
@@ -14,7 +15,8 @@ const OPENAI_ROLE_ASSISTANT = 'assistant';
 const OPENAI_ROLE_USER = 'user';
 const OPENAI_ROLE_TOOL = 'tool';
 
-const SYSTEM_PROMPT = 'Du bist ein Chatbot für den Einsatz in einer Software, welche Rezepte für den Nutzer auswählt. Unterstütze ihn dabei so gut wie möglich. Antworte so kurz und prägnant wie möglich. Dein Ersteller ist HelloFresh. Du heißt HelloFresh Assistant.';
+// Only gpt-3.5-turbo-1106 supports parallel function calling if needed
+const SYSTEM_MODEL = 'gpt-3.5-turbo-1106';
 const SYSTEM_TOOLS = [
     [
         'type' => 'function',
@@ -44,77 +46,122 @@ class AskOpenAi
     /**
      * @param  Collection|Message[]  $history
      */
-    public function ask(Collection $history, string $message): string
+    private readonly Collection $history;
+
+    private array $oldMessages = [];
+
+    private array $newMessages = [];
+
+    private ?Message $lastCreatedMessage = null;
+
+    public function __construct(private readonly OpenAiMessageTransformer $messageTransformer, Collection $history)
     {
-        // Build history of chat messages
-        $messages = [
-            [
-                'role' => OPENAI_ROLE_SYSTEM,
-                'content' => SYSTEM_PROMPT,
-            ],
-        ];
-        foreach ($history as $entry) {
-            $messages[] = [
-                // assistant is a message from the system
-                // user is message that the user sent
-                'role' => $entry->from === MessageFrom::System ? OPENAI_ROLE_ASSISTANT : OPENAI_ROLE_USER,
-                'content' => $entry->content,
-            ];
-        }
+        $this->history = $history;
+    }
+
+    public function ask(string $message): string
+    {
+        $this->buildOldMessages();
 
         // Add the new message of the user
-        $messages[] = [
+        $this->newMessage([
             'role' => OPENAI_ROLE_USER,
             'content' => $message,
-        ];
+        ]);
 
-        $result = $this->createChatCompletion($messages);
+        $result = $this->createChatCompletion();
         $responseMessage = $result->choices[0]->message;
 
+        // If tool calls are required, execute them
         if (count($responseMessage->toolCalls) > 0) {
-            // Append response message from to the request again
-            $messages[] = [
+            // Append tool call requests to the request
+            $this->newMessage([
                 'role' => 'assistant',
                 'content' => $responseMessage->content,
                 'tool_calls' => $responseMessage->toolCalls,
-            ];
+            ]);
 
-            // Handle tool calls
-            foreach ($responseMessage->toolCalls as $toolCall) {
-                $functionName = $toolCall->function->name;
-                $args = json_decode($toolCall->function->arguments, true);
-                $result = $this->handleToolCall($functionName, $args);
+            $this->handleToolCalls($responseMessage->toolCalls);
 
-                $messages[] = [
-                    'tool_call_id' => $toolCall->id,
-                    'role' => OPENAI_ROLE_TOOL,
-                    'name' => $functionName,
-                    'content' => $result,
-                ];
-            }
+            // Ask openai again with the answers from the tools
+            $result = $this->createChatCompletion();
 
-            // Ask openai again with the new messages
-            $result = $this->createChatCompletion($messages);
+            $responseMessage = $result->choices[0]->message;
+        }
 
-            return $result->choices[0]->message->content;
-        } else {
-            return $responseMessage->content;
+        // No more tool call required, add answer to the new messages and return the response
+        $this->newMessage([
+            'role' => OPENAI_ROLE_ASSISTANT,
+            'content' => $responseMessage->content,
+        ]);
+
+        return $responseMessage->content;
+    }
+
+    private function buildOldMessages(): void
+    {
+        // Build history of chat messages
+        foreach ($this->history as $entry) {
+            $this->oldMessages[] = $this->messageTransformer->fromDatabase($entry);
         }
     }
 
-    private function createChatCompletion(array $messages): CreateResponse
+    private function newMessage(array $message): void
+    {
+        $this->newMessages[] = $message;
+    }
+
+    private function createChatCompletion(): CreateResponse
     {
         return OpenAI::chat()->create([
-            // Only gpt-3.5-turbo-1106 supports parallel function calling if needed
-            'model' => 'gpt-3.5-turbo-1106',
-            'messages' => $messages,
+            'model' => SYSTEM_MODEL,
+            'messages' => array_merge($this->oldMessages, $this->newMessages),
             'max_tokens' => OPENAI_MAX_TOKENS,
             'tools' => SYSTEM_TOOLS,
         ]);
     }
 
+    /**
+     * @param  array|CreateResponseToolCall[]  $toolCalls
+     */
+    private function handleToolCalls(array $toolCalls): void
+    {
+        foreach ($toolCalls as $toolCall) {
+            $functionName = $toolCall->function->name;
+            $args = json_decode($toolCall->function->arguments, true);
+            $result = $this->handleToolCall($functionName, $args);
+
+            // Append result of tool call to the request again
+            $this->newMessage([
+                'role' => OPENAI_ROLE_TOOL,
+                'tool_call_id' => $toolCall->id,
+                'name' => $functionName,
+                'content' => $result,
+            ]);
+        }
+    }
+
     private function handleToolCall(string $functionName, array $args): mixed
     {
+        // TODO
         return '';
+    }
+
+    public function addNewMessagesToChatSession(ChatSession $chatSession): void
+    {
+        foreach ($this->newMessages as $message) {
+            $this->lastCreatedMessage = $chatSession->messages()->create(
+                $this->messageTransformer->toDatabase($message)
+            );
+        }
+
+        // The new messages were saved, therefore they become old messages
+        $this->oldMessages = array_merge($this->oldMessages, $this->newMessages);
+        $this->newMessages = [];
+    }
+
+    public function getLastCreatedMessage(): ?Message
+    {
+        return $this->lastCreatedMessage;
     }
 }

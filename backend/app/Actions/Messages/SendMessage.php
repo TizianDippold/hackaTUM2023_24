@@ -4,32 +4,24 @@ namespace App\Actions\Messages;
 
 use App\Actions\OpenAi\AskOpenAi;
 use App\Models\ChatSession;
-use App\Models\Enums\MessageFrom;
 use App\Models\Message;
 
 class SendMessage
 {
-    public function __construct(private readonly AskOpenAi $askOpenAi)
-    {
-    }
-
     public function send(ChatSession $chatSession, string $message): Message
     {
         $chatSession->load('messages');
 
+        $asker = app(AskOpenAi::class, [
+            'history' => $chatSession->messages,
+        ]);
+
         // Ask openai for an answer, with the chat messages that were already sent in this conversation
-        $answer = $this->askOpenAi->ask($chatSession->messages, $message);
+        $asker->ask($message);
 
-        // Insert message that the user wrote into the database
-        $chatSession->messages()->create([
-            'from' => MessageFrom::User,
-            'content' => $message,
-        ]);
+        $asker->addNewMessagesToChatSession($chatSession);
 
-        // Insert the answer from openai into the database
-        return $chatSession->messages()->create([
-            'from' => MessageFrom::System,
-            'content' => $answer,
-        ]);
+        // This is definitely not null because the user did ask something
+        return $asker->getLastCreatedMessage();
     }
 }

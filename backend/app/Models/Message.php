@@ -8,13 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Message extends Model
 {
-    protected $fillable = [
-        'from',
-        'content',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'from' => MessageFrom::class,
+        'tool_calls' => 'array',
     ];
 
     public function chatSession(): BelongsTo
