@@ -73,17 +73,17 @@ endpoints:
         name: message
         description: 'Must be at least 1 character.'
         required: true
-        example: urnsxznsxomzmejtnukovaomsznibvjtqelcu
+        example: vtjswkgnkfvoljczvdzpbvszbjliplhsdsmfgbrbprtovrlzapzjcxokclihhbjfcrnakonllpgco
         type: string
         enumValues: []
         custom: []
     cleanBodyParameters:
-      message: urnsxznsxomzmejtnukovaomsznibvjtqelcu
+      message: vtjswkgnkfvoljczvdzpbvszbjliplhsdsmfgbrbprtovrlzapzjcxokclihhbjfcrnakonllpgco
     fileParameters: []
     responses:
       -
         status: 200
-        content: '{"data":{"id":1,"chat_session_id":2,"from":"system","content":"mqjxw"}}'
+        content: '{"data":{"id":1,"chat_session_id":1,"from":"system","content":"Du bist ein Chatbot f\u00fcr den Einsatz in einer Software, welche Rezepte f\u00fcr den Nutzer ausw\u00e4hlt. Unterst\u00fctze ihn dabei so gut wie m\u00f6glich. Antworte so kurz und pr\u00e4gnant wie m\u00f6glich. Dein Ersteller ist HelloFresh. Du hei\u00dft HelloFresh Assistant."}}'
         headers: []
         description: ''
         custom: []
