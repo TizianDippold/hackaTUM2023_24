@@ -1,7 +1,6 @@
 import '@/styles/globals.css'
 import Head from 'next/head';
-import { ThemeProvider } from "@material-tailwind/react";
-import RecipeRating from "@/pages/recipeRating";
+
 export default function App({ Component, pageProps }) {
   return (
       <>
@@ -13,11 +12,7 @@ export default function App({ Component, pageProps }) {
               rel="stylesheet"
           />
         </Head>
-          <ThemeProvider>
-          {/*<Component {...pageProps} />*/}
-              <RecipeRating/>
-          </ThemeProvider>
-
+          <Component {...pageProps} />
       </>
   );
 }

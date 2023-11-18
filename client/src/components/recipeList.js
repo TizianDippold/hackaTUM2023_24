@@ -3,14 +3,29 @@ import React, {useEffect, useState} from 'react';
 import Card from './card'
 
 
-const RecipeRating = () => {
+const RecipeList = ({ onRecipeCountChange }) => {
     const [recipes, setRecipes] = useState([]);
     const [selectedCards, setSelectedCards] = useState([]);
-
+    const showButton = selectedCards.length >= 1;
     const url = 'https://hackatum23.moremaier.com/api/recipes'
-    const fetchAllRecipes = async () => {
+    const numRecipes = 10;
+    let indices = []
+    const getRandom = (min, max) => {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+
+    for(let i =0; i <numRecipes; i++) {
+        let randomNumber;
+        do {
+            randomNumber = getRandom(1, 30);
+        } while (indices.includes(randomNumber));
+
+        indices.push(getRandom(1,30));
+    }
+
+    const fetchAllRecipes = async (recipeID) => {
         try {
-            const response = await fetch(url);
+            const response = await fetch(`${url}/${recipeID}`);
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -38,7 +53,16 @@ const RecipeRating = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const allRecipes = await fetchAllRecipes();
+            let allRecipes = [];
+            // let recipesWithTags = [];
+            for (let i = 0; i <numRecipes; i++){
+                await fetchAllRecipes(indices[i]).then((response) => {
+                    if(response){
+                        allRecipes.push(response);
+                    }
+                });
+
+            }
             const recipesWithTags = await Promise.all(
                 allRecipes.map(async (recipe) => {
                     const tags = await fetchTagsForRecipe(recipe.id);
@@ -51,6 +75,10 @@ const RecipeRating = () => {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        // Notify the parent component when the number of selected recipes changes
+        onRecipeCountChange(selectedCards.length);
+    }, [selectedCards, onRecipeCountChange]);
 
     const handleCardSelect = (recipe) => {
         const isAlreadySelected = selectedCards.some((selected) => selected.id === recipe.id);
@@ -64,24 +92,13 @@ const RecipeRating = () => {
     };
 
     return (
-        <div className="w-full h-full bg-white">
-            <div className="bg-greenPastel w-full h-full p-5 flex flex-col items-center justify-center">
-                <img
-                    src="https://img.hellofresh.com/f_auto,fl_lossy,q_auto/hellofresh_website/us/landing-pages/b2b/Hello_Fresh_White_Lockup_CMYK.png"
-                    className="rounded-sm object-cover h-31 mt-10 "/>
-
-                <span className="mt-10 font-bold text-xl text-active">Help us get to know you better</span>
-                <span>Sort recipes based on your preferences</span>
-            </div>
             <div className="grid grid-cols-2 gap-5 p-5">
                 {recipes && recipes.map(recipe => (
                     <Card recipe={recipe} onSelect={() => handleCardSelect(recipe)}
                           isSelected={selectedCards.some((selected) => selected.id === recipe.id)}/>
                 ))}
-
             </div>
-        </div>
     );
 };
 
-export default RecipeRating;
+export default RecipeList;
