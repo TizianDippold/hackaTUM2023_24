@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChatSessionApiController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\LikedRecipesApiController;
 use App\Http\Controllers\MessageApiController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\TagController;
@@ -22,6 +23,9 @@ Route::apiResource('chat-sessions', ChatSessionApiController::class)
     ->only('store');
 Route::post('chat-sessions/{chatSession}/finalize', [ChatSessionApiController::class, 'finalize']);
 Route::get('chat-sessions/{chatSession}/results', [ChatSessionApiController::class, 'getResults']);
+Route::apiResource('chat-sessions.liked-recipes', LikedRecipesApiController::class)
+    ->only('store')
+    ->scoped();
 
 Route::apiResource('chat-sessions.messages', MessageApiController::class)
     ->only('store');

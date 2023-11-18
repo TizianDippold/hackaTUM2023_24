@@ -17,6 +17,8 @@ class ChatSessionResource extends JsonResource
         return [
             'id' => $this->id,
             'finalized' => $this->finalized,
+
+            'liked_recipes' => new RecipeCollection($this->whenLoaded('likedRecipes')),
         ];
     }
 }
