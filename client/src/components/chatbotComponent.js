@@ -1,13 +1,55 @@
 import { Button, Input } from "@material-tailwind/react";
 import MessageComponentBot from "@/components/messageComponentBot";
 import MessageComponentUser from "@/components/messageComponentUser";
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from "next/image";
+import {fetch} from "next/dist/compiled/@edge-runtime/primitives";
 
 export default function ChatbotComponent() {
     const [userInput, setUserInput] = useState('');
     const chatMsgs = ['How can I help you today?']
+    let botMsg = '';
+    let chatId = 0;
     const [chatList, chatSetList] = React.useState(chatMsgs);
+
+    const url = 'https://hackatum23.moremaier.com/api/chat-sessions/'
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            });
+        };
+
+        fetchData();
+    }, []);
+
+    const fetchChatResponse = async () => {
+        try {
+            const response = await fetch('{url}/', {
+                method: "POST",
+                body: JSON.stringify({
+                    message: userInput,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const chatbotAnswerData = await response.json();
+            return chatbotAnswerData.data.content;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
 
     const handleInputChange = (e) => {
         setUserInput(e.target.value);
@@ -17,7 +59,10 @@ export default function ChatbotComponent() {
         console.log('Sending user input:', userInput);
         const newList = chatList.concat(userInput);
         chatSetList(newList);
+        botMsg = fetchChatResponse(userInput);
         setUserInput('');
+
+        chatList.concat(botMsg);
         console.log(chatList);
     };
 
