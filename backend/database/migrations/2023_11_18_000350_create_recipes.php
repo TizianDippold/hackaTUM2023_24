@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('headline');
             $table->string('instructions');
-            $table->string('preptime');
+            $table->integer('preptime');
             $table->string('image');
             $table->double('calories');
             $table->double('carbs');
