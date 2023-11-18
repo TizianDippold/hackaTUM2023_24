@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const withMT = require("@material-tailwind/react/utils/withMT");
+module.exports = withMT({
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -13,6 +14,19 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
+    fontFamily: {
+      raleway: ["Raleway", "sans-serif"],
+    },
+    colors: {
+      background: "#f8f8f8",
+      greenPastel: "#96DC14",
+      backgroundGreen: "#96DC14",
+      primary: "#000000",
+      secondary: "#9E9E9E",
+      active: "#056835",
+    },
   },
   plugins: [],
-}
+})
+
+// #D2FA96

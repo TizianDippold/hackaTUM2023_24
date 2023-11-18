@@ -1,118 +1,153 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
+import { useState } from "react";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const [keyword, setKeyword] = useState(null); // Stores the input recipe name
+  const [diet, setDiet] = useState(null);// Stores the diet type`
+  const [exclude, setExclude] = useState(null);// Stores the excluded ingredients
+  const [response, setResponse] = useState(null); // Stores the response from the API
+
+
+  const recipes = [
+    {
+      id: 1,
+      title: 'Recipe 1',
+      image: 'recipe1.jpg',
+      readyInMinutes: 30,
+      servings: 4,
+      sourceUrl: 'https://example.com/recipe1',
+    },
+    {
+      id: 2,
+      title: 'Recipe 2',
+      image: 'recipe2.jpg',
+      readyInMinutes: 45,
+      servings: 6,
+      sourceUrl: 'https://example.com/recipe2',
+    },
+    {
+      id: 3,
+      title: 'Recipe 3',
+      image: 'recipe2.jpg',
+      readyInMinutes: 45,
+      servings: 6,
+      sourceUrl: 'https://example.com/recipe2',
+    },
+    {
+      id: 4,
+      title: 'Recipe 4',
+      image: 'recipe2.jpg',
+      readyInMinutes: 45,
+      servings: 6,
+      sourceUrl: 'https://example.com/recipe2',
+    },
+  ];
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className="flex flex-col md:px-12 px-0 relative bg-background font-raleway items-center min-h-screen">
+        <h1 className="text-6xl font-bold text-active mt-20">Recipe Search</h1>
+        <h2 className="text-primary text-2xl font-light mt-5">
+          Search recipes from all over the world.
+        </h2>
+        <form
+            className="sm:mx-auto mt-20 md:max-w-4xl justify-center flex flex-col sm:w-full sm:flex"
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+        >
+          <input
+              type="text"
+              className="flex w-full rounded-lg px-5 py-3 text-base text-background font-semibold focus:outline-none focus:ring-2 focus:ring-active"
+              placeholder="Enter a recipe"
+              onChange={(e) => {
+                setKeyword(e.target.value);
+                setResponse(null); // Removes previous response when user types a new recipe
+              }}
+          />
+          <div className="mt-5 flex sm:flex-row flex-col justify-start">
+            <div className="sm:w-1/3 w-full">
+              <label className="block text-primary text-sm">Diet</label>
+              <select
+                  className="mt-1 flex w-full rounded-lg px-5 py-3 text-base text-background font-bold focus:outline-none"
+                  onChange={(e) => setDiet(e.target.value)}
+              >
+                {[
+                  "none",
+                  "pescetarian",
+                  "lacto vegetarian",
+                  "ovo vegetarian",
+                  "vegan",
+                  "vegetarian",
+                ].map((diet) => {
+                  return <option value={diet}>{diet}</option>;
+                })}
+              </select>
+            </div>
+            <div className="sm:ml-10 sm:w-1/3 w-full">
+              <label className="block text-primary text-sm">
+                Exclude Ingredients
+              </label>
+              <input
+                  type="text"
+                  className="mt-1 w-full rounded-lg px-5 py-3 text-base text-background font-bold focus:outline-none"
+                  placeholder="cocunut"
+                  onChange={(e) => setExclude(e.target.value)}
+              ></input>
+            </div>
+          </div>
+          <button
+              className="mt-5 w-full rounded-lg px-5 py-3 bg-active text-base text-primary font-bold hover:text-active hover:bg-primary transition-colors duration-300 sm:px-10"
+              type="submit"
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            Search
+          </button>
+        </form>
+
+        {/*{response && ( // Render only if response is not null*/}
+        <div className="mt-10">
+          <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {recipes.map(recipe => (
+                <div key={recipe.id} className="pt-6">
+                  <div className="flow-root bg-light rounded-lg px-4 pb-8">
+                    <div className="-mt-6">
+                      <div className="flex items-center justify-center">
+											<span className="p-2">
+												<img
+                                                    src={
+                                                        `https://spoonacular.com/recipeImages/` +
+                                                        recipe.image
+                                                    }
+                                                    className="w-full h-full rounded-lg"
+                                                    alt={recipe.id}
+                                                />
+											</span>
+                      </div>
+                      <div className="text-center justify-center items-center">
+                        <h3 className="mt-4 text-lg font-bold w-full break-words overflow-x-auto text-primary tracking-tight">
+                          {recipe.title}
+                        </h3>
+                        <span className="mt-2 text-sm text-secondary block">
+												Ready in {recipe.readyInMinutes}{' '}
+                          minutes - {recipe.servings}{' '}
+                          Servings
+											</span>
+                        <a
+                            className="mt-4 text-sm text-active block"
+                            href={recipe.sourceUrl}
+                        >
+                          Go to Recipe
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            ))}
+          </div>
         </div>
+        {/*)}*/}
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      );
 }
