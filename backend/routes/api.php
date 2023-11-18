@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChatSessionApiController;
 use App\Http\Controllers\MessageApiController;
+use App\Http\Controllers\RecipeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,6 @@ Route::apiResource('chat-sessions', ChatSessionApiController::class)
 
 Route::apiResource('chat-sessions.messages', MessageApiController::class)
     ->only('store');
+
+Route::apiResource('recipes', RecipeController::class)
+    ->only('index', 'show');

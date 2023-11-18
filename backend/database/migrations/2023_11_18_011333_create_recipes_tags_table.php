@@ -21,7 +21,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->foreign('tag_id')
                 ->references('id')
-               ->on('tags')
+                ->on('tags')
                 ->cascadeOnDelete();
             $table->timestamps();
         });

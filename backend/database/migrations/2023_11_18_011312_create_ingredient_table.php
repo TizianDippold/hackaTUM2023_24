@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
-            $table->string('name') -> unique();
+            $table->string('name')->unique();
             $table->boolean('is_vegan');
             $table->boolean('is_vegetarian');
             $table->timestamps();
