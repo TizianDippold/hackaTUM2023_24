@@ -1,30 +1,21 @@
 import React, {useEffect, useState} from 'react';
 
-import Card from './card'
+import BigCard from "./bigCard";
 
 
-const RecipeRating = () => {
+const RecipeResults = () => {
     const [recipes, setRecipes] = useState([]);
-    const [selectedCards, setSelectedCards] = useState([]);
 
-    const url = 'https://hackatum23.moremaier.com/api/recipes'
-    const fetchAllRecipes = async () => {
+    const url = 'https://hackatum23.moremaier.com/api'
+
+    const fetchChatResults = async () => {
         try {
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const recipesData = await response.json();
-            return recipesData.data;
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-    const fetchTagsForRecipe = async (recipeID) => {
-        try {
-            const response = await fetch(`${url}/${recipeID}/tags`);
+            const response = await fetch(`${url}/chat-sessions/1/results`, {
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                    "Accept": "application/json",
+                }
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -38,30 +29,24 @@ const RecipeRating = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const allRecipes = await fetchAllRecipes();
-            const recipesWithTags = await Promise.all(
-                allRecipes.map(async (recipe) => {
-                    const tags = await fetchTagsForRecipe(recipe.id);
-                    return { ...recipe, tags };
-                })
-            );
-            setRecipes(recipesWithTags);
+            const allRecipes = await fetchChatResults();
+            allRecipes.splice(3);
+            setRecipes(allRecipes);
         };
-
         fetchData();
     }, []);
 
 
-    const handleCardSelect = (recipe) => {
-        const isAlreadySelected = selectedCards.some((selected) => selected.id === recipe.id);
-
-        if (isAlreadySelected) {
-            const updatedSelection = selectedCards.filter((selected) => selected.id !== recipe.id);
-            setSelectedCards(updatedSelection);
-        } else if (selectedCards.length < 5) {
-            setSelectedCards([...selectedCards, recipe]);
-        }
-    };
+    // const handleCardSelect = (recipe) => {
+    //     const isAlreadySelected = selectedCards.some((selected) => selected.id === recipe.id);
+    //
+    //     if (isAlreadySelected) {
+    //         const updatedSelection = selectedCards.filter((selected) => selected.id !== recipe.id);
+    //         setSelectedCards(updatedSelection);
+    //     } else if (selectedCards.length < 5) {
+    //         setSelectedCards([...selectedCards, recipe]);
+    //     }
+    // };
 
     return (
         <div className="w-full h-full bg-white">
@@ -70,13 +55,12 @@ const RecipeRating = () => {
                     src="https://img.hellofresh.com/f_auto,fl_lossy,q_auto/hellofresh_website/us/landing-pages/b2b/Hello_Fresh_White_Lockup_CMYK.png"
                     className="rounded-sm object-cover h-31 mt-10 "/>
 
-                <span className="mt-10 font-bold text-xl text-active">Help us get to know you better</span>
-                <span>Sort recipes based on your preferences</span>
+                <span className="mt-10 font-bold text-xl text-active">
+                    Here are your recommendations</span>
             </div>
-            <div className="grid grid-cols-2 gap-5 p-5">
+            <div className="grid grid-cols-1 gap-5 p-5">
                 {recipes && recipes.map(recipe => (
-                    <Card recipe={recipe} onSelect={() => handleCardSelect(recipe)}
-                          isSelected={selectedCards.some((selected) => selected.id === recipe.id)}/>
+                    <BigCard recipe={recipe}/>
                 ))}
 
             </div>
@@ -84,4 +68,4 @@ const RecipeRating = () => {
     );
 };
 
-export default RecipeRating;
+export default RecipeResults;
