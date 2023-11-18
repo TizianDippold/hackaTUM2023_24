@@ -16,7 +16,7 @@ const OPENAI_ROLE_USER = 'user';
 const OPENAI_ROLE_TOOL = 'tool';
 
 // Only gpt-3.5-turbo-1106 supports parallel function calling if needed
-const SYSTEM_MODEL = 'gpt-3.5-turbo-1106';
+const SYSTEM_MODEL = 'gpt-4-1106-preview';
 
 class AskOpenAi
 {
