@@ -23,7 +23,7 @@ module.exports = withMT({
       backgroundGreen: "#96DC14",
       primary: "#000000",
       secondary: "#9E9E9E",
-      active: "#056835",
+      active: "#01452c",
     },
   },
   plugins: [],
