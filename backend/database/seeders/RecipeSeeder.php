@@ -38,7 +38,7 @@ class RecipeSeeder extends Seeder
     public function run(): void
     {
         $current_recipe = [
-            'name' => 'Harissa chicken on quinoa with green olives',
+            'name' => 'Harissa Chicken on Quinoa',
             'headline' => 'This dish produces 50% less CO2e from ingredients than an average HelloFresh recipe',
             'preptime' => '25',
             'instructions' => 'Create a flavorful Harissa Chicken on Quinoa with Green Olives by marinating and searing the chicken. Cook quinoa separately, mix with green olives, and plate the dish for a visually appealing meal.',
