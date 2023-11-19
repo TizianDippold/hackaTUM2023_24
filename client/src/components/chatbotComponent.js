@@ -3,8 +3,7 @@ import MessageComponentBot from "@/components/messageComponentBot";
 import MessageComponentUser from "@/components/messageComponentUser";
 import React, {useState} from 'react';
 import {useRouter} from "next/router";
-import Dictaphone from "@/components/Dictaphone";
-import {useSession} from "@/pages/SessionContext";
+
 
 export default function ChatbotComponent({sessionData}) {
     const {id, finalized} = sessionData;
@@ -58,13 +57,7 @@ export default function ChatbotComponent({sessionData}) {
         }
     };
 
-    useEffect(() => {
-        if (sessionData == null) {
-            sessionData = {id: 90, finalized: false};
-        } else if (sessionData.id == null) {
-            sessionData.id = 90;
-        }
-    }, []);
+
 
 
     const handleInputChange = (e) => {

@@ -1,16 +1,13 @@
-import React, { createContext, useContext, useState } from 'react';
+// pages/SessionContext.js
+import { createContext, useContext, useState } from 'react';
 
 const SessionContext = createContext();
 
 export const SessionProvider = ({ children }) => {
     const [sessionData, setSessionData] = useState(null);
 
-    const updateSessionData = (data) => {
-        setSessionData(data);
-    };
-
     return (
-        <SessionContext.Provider value={{ sessionData, updateSessionData }}>
+        <SessionContext.Provider value={{ sessionData, setSessionData }}>
             {children}
         </SessionContext.Provider>
     );

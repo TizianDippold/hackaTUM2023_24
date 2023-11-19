@@ -1,16 +1,18 @@
 import {Inter} from 'next/font/google'
 import Link from 'next/link';
 import React, {useState} from "react";
-import RecipeList from "@/components/recipeList";
 import { useRouter } from 'next/router';
-import {useSession} from "@/pages/SessionContext"; // Import the useRouter hook
+import RecipeList from "@/components/recipeList";
+import {useSession} from "@/pages/SessionContext";
+
 
 const inter = Inter({subsets: ['latin']})
 
 export default function Home() {
     const url = 'https://hackatum23.moremaier.com/api/chat-sessions'
     const [showButton, setShowButton] = useState(false);
-    const { updateSessionData } = useSession();
+    const { setSessionData } = useSession();
+    const router = useRouter();
 
     const requestOptions = {
         method: 'POST',
@@ -34,14 +36,22 @@ export default function Home() {
     }
 
     const handleButtonClick = async () => {
-        try {
-            const session = await postSession();
-            updateSessionData(session);
-        } catch (error) {
-            console.error('Error handling button click:', error);
-        }
+
+            const sessionData = await postSession().then((sessionData) =>{
+                console.log("pages index");
+                console.log(sessionData);
+                setSessionData(sessionData);
+                router.push('/chat');
+            });
+
+
     };
 
+    // const handleButtonClick =  () => {
+    //
+    //             router.push('/chat');
+    //
+    // };
     const handleRecipeCountChange = (newRecipeCount) => {
         // Update showButton state based on the new recipe count
         setShowButton(newRecipeCount >= 2);
@@ -60,12 +70,12 @@ export default function Home() {
             <RecipeList onRecipeCountChange={handleRecipeCountChange}/>
             {showButton && (
                 <div className="fixed bottom-0">
-                    <Link href="/chat">
+                    {/*<Link href="/chat">*/}
                         <button onClick={handleButtonClick}
                                 className="bg-greenPastel hover:bg-blue text-white font-bold py-2 px-4 rounded w-screen mr-5">
                             Continue...
                         </button>
-                    </Link>
+                    {/*</Link>*/}
                 </div>
             )}
         </div>
