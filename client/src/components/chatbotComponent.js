@@ -14,6 +14,10 @@ export default function ChatbotComponent({sessionData}) {
 
     const url = 'https://hackatum23.moremaier.com/api/chat-sessions';
 
+    const textDetected = async (text) => {
+        setUserInput(text);
+        await handleButtonSend();
+    };
 
     const fetchChatResponse = async () => {
         try {
@@ -126,7 +130,7 @@ export default function ChatbotComponent({sessionData}) {
                     <Button onClick={handleButtonFinalize} className="bg-gray-200 p-0 shadow-none pl-3">
                         <img className="h-8 w-8 bg-gray-200" src="https://icones.pro/wp-content/uploads/2021/02/icone-de-tique-ronde-grise.png" alt="finalize"/>
                     </Button>
-                    <Dictaphone/>
+                    <Dictaphone textDetected={textDetected} />
                 </div>
             </div>
         </>
