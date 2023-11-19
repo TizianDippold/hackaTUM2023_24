@@ -41,17 +41,6 @@ const RecipeResults = () => {
     }, []);
 
 
-    // const handleCardSelect = (recipe) => {
-    //     const isAlreadySelected = selectedCards.some((selected) => selected.id === recipe.id);
-    //
-    //     if (isAlreadySelected) {
-    //         const updatedSelection = selectedCards.filter((selected) => selected.id !== recipe.id);
-    //         setSelectedCards(updatedSelection);
-    //     } else if (selectedCards.length < 5) {
-    //         setSelectedCards([...selectedCards, recipe]);
-    //     }
-    // };
-
     return (
         <div className="w-full h-full bg-white">
             <div className="bg-greenPastel w-full h-full p-5 flex flex-col items-center justify-center">
@@ -63,7 +52,7 @@ const RecipeResults = () => {
                     loading ? 'Loading...' : found ? 'Here are some recipes!' : 'Sorry, no recipes found!'
                 }</span>
             </div>
-            <div className="grid grid-cols-1 gap-5 p-5">
+            <div className="p-5">
                 {recipes && recipes.map(recipe => (
                     <BigCard recipe={recipe}/>
                 ))}

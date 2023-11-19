@@ -1,7 +1,7 @@
 import {Button} from "@material-tailwind/react";
 import MessageComponentBot from "@/components/messageComponentBot";
 import MessageComponentUser from "@/components/messageComponentUser";
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useRouter} from "next/router";
 import Dictaphone from "@/components/Dictaphone";
 import {useSession} from "@/pages/SessionContext";
@@ -82,9 +82,7 @@ export default function ChatbotComponent({sessionData}) {
 
         setUserInput('');
         chatSetList(prevState => prevState.concat(botMsg));
-        console.log(responseData['data']['chat_session']);
-        console.log(sessionData[0])
-        console.log("hiii: " + responseData['data']['chat_session_id']);
+
         if (responseData['data']['chat_session']['finalized']) {
             await router.push('/results');
         }
