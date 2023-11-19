@@ -15,16 +15,15 @@ export default function ChatbotComponent({sessionData}) {
     const url = 'https://hackatum23.moremaier.com/api/chat-sessions';
 
     const textDetected = async (text) => {
-        setUserInput(text);
-        await handleButtonSend();
+        await handleSend(text);
     };
 
-    const fetchChatResponse = async () => {
+    const fetchChatResponse = async (text) => {
         try {
             const response = await fetch(`${url}/${id}/messages`, {
                 method: "POST",
                 body: JSON.stringify({
-                    message: userInput,
+                    message: text,
                 }),
                 headers: {
                     "Content-Type": "application/json; charset=UTF-8",
@@ -69,13 +68,13 @@ export default function ChatbotComponent({sessionData}) {
         setUserInput(e.target.value);
     };
 
-    const handleButtonSend = async () => {
-        if (userInput === '') {
+    const handleSend = async (text) => {
+        if (text === '') {
             return;
         }
-        chatSetList(prevState => prevState.concat(userInput));
+        chatSetList(prevState => prevState.concat(text));
 
-        const responseData =  await fetchChatResponse(userInput);
+        const responseData =  await fetchChatResponse(text);
         const botMsg = responseData['data']['content'];
 
         setUserInput('');
@@ -85,6 +84,10 @@ export default function ChatbotComponent({sessionData}) {
         if (responseData['data']['chat_session']['finalized']) {
             await router.push('/results');
         }
+    };
+
+    const handleButtonSend = async () => {
+        await handleSend(userInput);
     };
 
     const handleButtonFinalize = async () => {
