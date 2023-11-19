@@ -26,6 +26,8 @@ const Dictaphone = ({ textDetected }) => {
                     recognition.stop();
                     textDetected(text, () => {
                         recognition.start();
+                    }, () => {
+                        recognition.stop();
                     });
                 }
             }
