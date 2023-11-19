@@ -2,8 +2,8 @@ import {Button} from "@material-tailwind/react";
 import MessageComponentBot from "@/components/messageComponentBot";
 import MessageComponentUser from "@/components/messageComponentUser";
 import React, {useState} from 'react';
-import Link from 'next/link';
 import {useRouter} from "next/router";
+import Dictaphone from "@/components/Dictaphone";
 
 export default function ChatbotComponent() {
     const [userInput, setUserInput] = useState('');
@@ -60,6 +60,7 @@ export default function ChatbotComponent() {
         <>
             <div className="flex flex-col h-screen bg-gray-50">
                     <div className="flex justify-between bg-greenPastel p-4">
+                        <Dictaphone/>
                         <img
                             src="https://img.hellofresh.com/f_auto,fl_lossy,q_auto/hellofresh_website/us/landing-pages/b2b/Hello_Fresh_White_Lockup_CMYK.png"
                             className="rounded-sm object-cover h-10 mt-2"/>
