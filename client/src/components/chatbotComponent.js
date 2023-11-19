@@ -14,8 +14,8 @@ export default function ChatbotComponent({sessionData}) {
 
     const url = 'https://hackatum23.moremaier.com/api/chat-sessions';
 
-    const textDetected = async (text) => {
-        await handleSend(text);
+    const textDetected = async (text, callback) => {
+        await handleSend(text, true, callback);
     };
 
     const fetchChatResponse = async (text) => {
@@ -68,7 +68,7 @@ export default function ChatbotComponent({sessionData}) {
         setUserInput(e.target.value);
     };
 
-    const handleSend = async (text) => {
+    const handleSend = async (text, shouldSpeak = false, callback = null) => {
         if (text === '') {
             return;
         }
@@ -76,6 +76,20 @@ export default function ChatbotComponent({sessionData}) {
 
         const responseData =  await fetchChatResponse(text);
         const botMsg = responseData['data']['content'];
+
+        if (shouldSpeak) {
+            let msg = new SpeechSynthesisUtterance(botMsg);
+            msg.lang = 'en-US';
+            msg.voice = speechSynthesis.getVoices().find(voice => voice.name === 'Samantha') || speechSynthesis.getVoices()[0];
+            msg.pitch = 1;
+            msg.rate = 1.25;
+            speechSynthesis.speak(msg);
+            msg.onend = () => {
+                if (callback !== null) {
+                    callback();
+                }
+            }
+        }
 
         setUserInput('');
         chatSetList(prevState => prevState.concat(botMsg));
