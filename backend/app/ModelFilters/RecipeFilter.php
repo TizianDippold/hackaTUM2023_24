@@ -82,7 +82,7 @@ class RecipeFilter extends ModelFilter
         return $this;
     }
 
-    public function withoutIngredient($value)
+    public function withoutIngredients($value)
     {
         if (is_array($value)) {
             return $this->whereDoesntHave('ingredients', function ($query) use ($value) {
