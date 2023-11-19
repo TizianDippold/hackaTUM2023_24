@@ -23,8 +23,8 @@ const Dictaphone = () => {
 
                 if (result.confidence > 0 && text !== '') {
                     console.log(text);
-                    // TODO
                     recognition.stop();
+                    textDetected(text);
                 }
             }
         }

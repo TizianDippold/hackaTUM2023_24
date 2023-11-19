@@ -16,6 +16,10 @@ export default function ChatbotComponent({sessionData}) {
 
     const url = 'https://hackatum23.moremaier.com/api/chat-sessions';
 
+    const textDetected = async (text) => {
+        setUserInput(text);
+        await handleButtonSend();
+    };
 
     const fetchChatResponse = async () => {
         try {
@@ -121,7 +125,7 @@ export default function ChatbotComponent({sessionData}) {
                         placeholder="Food...       "
                         className="bg-gray-200 pl-1 py-1 mr-3"
                     />
-                    <Dictaphone />
+                    <Dictaphone textDetected={textDetected} />
                     <Button onClick={handleButtonSend} className="bg-gray-200 pl-1 shadow-none">
                         <LuSendHorizonal size='2rem' color='grey'/>
                     </Button>
