@@ -4,6 +4,8 @@ import MessageComponentUser from "@/components/messageComponentUser";
 import React, {useState} from 'react';
 import {useRouter} from "next/router";
 import Dictaphone from "@/components/Dictaphone";
+import {TiMicrophoneOutline} from "react-icons/ti";
+import {LuSendHorizonal} from "react-icons/lu";
 
 
 export default function ChatbotComponent({sessionData}) {
@@ -110,23 +112,22 @@ export default function ChatbotComponent({sessionData}) {
                         </ul>
                     </div>
             </div>
-            <div className="sticky items-center justify-end bg-gray-200 p-3 absolute bottom-0 w-screen">
+            <div className="sticky items-center justify-end bg-gray-200 p-1 absolute bottom-0 w-screen">
                 <div className="pl-2">
                     <input
                         type="text"
                         value={userInput}
                         onChange={handleInputChange}
-                        placeholder="Food..."
-                        className="bg-gray-200 pl-2 py-1 mr-3"
+                        placeholder="Food...       "
+                        className="bg-gray-200 pl-1 py-1 mr-3"
                     />
-
-                    <Button onClick={handleButtonSend} className="bg-gray-200 p-0 shadow-none">
-                        <img className="h-8 w-8 bg-gray-200" src="https://cdn.icon-icons.com/icons2/1509/PNG/512/mailsend_104372.png" alt="send"/>
+                    <Dictaphone />
+                    <Button onClick={handleButtonSend} className="bg-gray-200 pl-1 shadow-none">
+                        <LuSendHorizonal size='2rem' color='grey'/>
                     </Button>
-                    <Button onClick={handleButtonFinalize} className="bg-gray-200 p-0 shadow-none pl-3">
-                        <img className="h-8 w-8 bg-gray-200" src="https://icones.pro/wp-content/uploads/2021/02/icone-de-tique-ronde-grise.png" alt="finalize"/>
-                    </Button>
-                    <Dictaphone/>
+                    {/*<Button onClick={handleButtonFinalize} className="bg-gray-200 p-0 shadow-none pl-3">*/}
+                    {/*    <img className="h-8 w-8 bg-gray-200" src="https://icones.pro/wp-content/uploads/2021/02/icone-de-tique-ronde-grise.png" alt="finalize"/>*/}
+                    {/*</Button>*/}
                 </div>
             </div>
         </>

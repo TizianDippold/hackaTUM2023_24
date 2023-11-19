@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import {Button} from "@material-tailwind/react";
 import {TiMicrophoneOutline} from "react-icons/ti";
 
-const Dictaphone = ({ textDetected }) => {
+const Dictaphone = () => {
     const [isClient, setIsClient] = useState(false)
     const [isEnabled, setIsEnabled] = useState(false);
 
@@ -54,9 +54,9 @@ const Dictaphone = ({ textDetected }) => {
 
     return (
         <>
-            {isClient && typeof webkitSpeechRecognition !== 'undefined' ? <Button onClick={toggle} className="bg-gray-200 p-1.5 shadow-none">
-                <TiMicrophoneOutline size='1.5rem' className="bg-gray-700"/>
-            </Button> : <p></p>}
+            {isClient && typeof webkitSpeechRecognition !== 'undefined' ? <Button onClick={toggle} className="bg-gray-200 shadow-none">
+                <TiMicrophoneOutline size='2rem' color='grey'/>
+            </Button> : <TiMicrophoneOutline size='2rem' color='bg-grey-50'/>}
             {/*{isClient && typeof webkitSpeechRecognition !== 'undefined' ? <button onClick={stopRecognition}>Stop</button> : <p>Recognition not enabled</p>}*/}
         </>
     );

@@ -32,12 +32,13 @@ const RecipeResults = ({sessionData}) => {
     useEffect(() => {
         const fetchData = async () => {
             const allRecipes = await fetchChatResults();
-            if (allRecipes != null ) {
+            if (allRecipes != null && allRecipes.length > 0 && allRecipes[0] !== []) {
                 allRecipes.splice(3);
                 setRecipes(prevState => allRecipes);
                 setLoading(false);
-                const foundRecipes = (allRecipes.length > 0);
-                setFound(foundRecipes);
+                setFound(true);
+            } else {
+                setFound(false);
             }
         };
         fetchData();
