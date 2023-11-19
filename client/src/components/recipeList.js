@@ -20,7 +20,7 @@ const RecipeList = ({ onRecipeCountChange }) => {
             randomNumber = getRandom(1, 30);
         } while (indices.includes(randomNumber));
 
-        indices.push(getRandom(1,30));
+        indices.push(randomNumber);
     }
 
     const fetchAllRecipes = async (recipeID) => {

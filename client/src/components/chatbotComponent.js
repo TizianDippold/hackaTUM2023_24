@@ -5,7 +5,8 @@ import React, {useState} from 'react';
 import {useRouter} from "next/router";
 import Dictaphone from "@/components/Dictaphone";
 
-export default function ChatbotComponent() {
+export default function ChatbotComponent({sessionData}) {
+    const {id, finalized} = sessionData;
     const [userInput, setUserInput] = useState('');
     let chatId = 1;
     const [chatList, chatSetList] = useState(['How can I help you today?']);
