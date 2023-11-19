@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Ingredient extends Model
 {
-
     public function recipes(): BelongsToMany
     {
         return $this->belongsToMany(Recipe::class);

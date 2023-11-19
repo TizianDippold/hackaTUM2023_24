@@ -19,6 +19,8 @@ class MessageResource extends JsonResource
             'chat_session_id' => $this->chat_session_id,
             'from' => $this->from,
             'content' => $this->content,
+
+            'chat_session' => new ChatSessionResource($this->whenLoaded('chatSession')),
         ];
     }
 }

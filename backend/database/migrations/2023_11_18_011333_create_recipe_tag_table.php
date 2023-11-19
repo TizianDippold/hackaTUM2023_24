@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recipes_tags', function (Blueprint $table) {
+        Schema::create('recipe_tag', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('recipe_id');
             $table->unsignedBigInteger('tag_id');
@@ -21,7 +21,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->foreign('tag_id')
                 ->references('id')
-               ->on('tags')
+                ->on('tags')
                 ->cascadeOnDelete();
             $table->timestamps();
         });
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recipes_tags');
+        Schema::dropIfExists('recipe_tag');
     }
 };

@@ -2,23 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Recipe extends Model
 {
-    //name of the recipe
-    protected $name;
-
-    //headline of the recipe
-    protected $headline;
-
-    protected $prepTime;
-
-    protected $image;
-
-    //Assocation to the ingredients
+    use Filterable;
 
     public function ingredients(): BelongsToMany
     {
@@ -29,6 +19,4 @@ class Recipe extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
-
-    use HasFactory;
 }

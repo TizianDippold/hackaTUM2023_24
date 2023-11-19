@@ -29,7 +29,151 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":{"id":1}}'
+        content: '{"data":{"id":1,"finalized":false}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/chat-sessions/{chatSession_id}/finalize'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Finalize chat session'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      chatSession_id:
+        name: chatSession_id
+        description: 'The ID of the chatSession.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      chatSession_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":1,"finalized":false}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/chat-sessions/{chatSession_id}/results'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get chat session results'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      chatSession_id:
+        name: chatSession_id
+        description: 'The ID of the chatSession.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      chatSession_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":1,"name":"Harissa chicken on quinoa with green olives","headline":"This dish produces 50% less CO2e from ingredients than an average HelloFresh recipe","instructions":"Create a flavorful Harissa Chicken on Quinoa with Green Olives by marinating and searing the chicken. Cook quinoa separately, mix with green olives, and plate the dish for a visually appealing meal.","preptime":25,"image":"https:\/\/img.hellofresh.com\/q_auto\/recipes\/image\/HF_Y23_R37_W44_DE_R4819-1_Main_low-661e95c9.jpg","calories":606,"carbs":52.54,"fat":30,"protein":38.4,"sugar":5.6,"sustainability_rating":0.85,"created_at":null,"updated_at":null}]}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/chat-sessions/{chat_session_id}/liked-recipes'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Like a recipe'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      chat_session_id:
+        name: chat_session_id
+        description: 'The ID of the chat session.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      chat_session_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      recipe_id:
+        name: recipe_id
+        description: ''
+        required: true
+        example: 5
+        type: integer
+        enumValues: []
+        custom: []
+    cleanBodyParameters:
+      recipe_id: 5
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":1,"finalized":false}}'
         headers: []
         description: ''
         custom: []
@@ -73,17 +217,188 @@ endpoints:
         name: message
         description: 'Must be at least 1 character.'
         required: true
-        example: vtjswkgnkfvoljczvdzpbvszbjliplhsdsmfgbrbprtovrlzapzjcxokclihhbjfcrnakonllpgco
+        example: eptjtjqpag
         type: string
         enumValues: []
         custom: []
     cleanBodyParameters:
-      message: vtjswkgnkfvoljczvdzpbvszbjliplhsdsmfgbrbprtovrlzapzjcxokclihhbjfcrnakonllpgco
+      message: eptjtjqpag
     fileParameters: []
     responses:
       -
         status: 200
-        content: '{"data":{"id":1,"chat_session_id":1,"from":"system","content":"Du bist ein Chatbot f\u00fcr den Einsatz in einer Software, welche Rezepte f\u00fcr den Nutzer ausw\u00e4hlt. Unterst\u00fctze ihn dabei so gut wie m\u00f6glich. Antworte so kurz und pr\u00e4gnant wie m\u00f6glich. Dein Ersteller ist HelloFresh. Du hei\u00dft HelloFresh Assistant."}}'
+        content: '{"data":{"id":1,"chat_session_id":1,"from":"system","content":"You are a chatbot for a software which selects recipes for the user. You should support the user as good as possible. Answer as shortly and precisely as possible. Your creator ist HelloFresh. Your name is HelloFresh Assistant."}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/recipes
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get all recipes from the database'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":1,"name":"Harissa chicken on quinoa with green olives","headline":"This dish produces 50% less CO2e from ingredients than an average HelloFresh recipe","instructions":"Create a flavorful Harissa Chicken on Quinoa with Green Olives by marinating and searing the chicken. Cook quinoa separately, mix with green olives, and plate the dish for a visually appealing meal.","preptime":25,"image":"https:\/\/img.hellofresh.com\/q_auto\/recipes\/image\/HF_Y23_R37_W44_DE_R4819-1_Main_low-661e95c9.jpg","calories":606,"carbs":52.54,"fat":30,"protein":38.4,"sugar":5.6,"sustainability_rating":0.85,"created_at":null,"updated_at":null}]}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/recipes/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get a single recipe from the database'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the recipe.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":1,"name":"Harissa chicken on quinoa with green olives","headline":"This dish produces 50% less CO2e from ingredients than an average HelloFresh recipe","instructions":"Create a flavorful Harissa Chicken on Quinoa with Green Olives by marinating and searing the chicken. Cook quinoa separately, mix with green olives, and plate the dish for a visually appealing meal.","preptime":25,"image":"https:\/\/img.hellofresh.com\/q_auto\/recipes\/image\/HF_Y23_R37_W44_DE_R4819-1_Main_low-661e95c9.jpg","calories":606,"carbs":52.54,"fat":30,"protein":38.4,"sugar":5.6,"sustainability_rating":0.85,"created_at":null,"updated_at":null}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/recipes/{recipe_id}/tags'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get all tags of a recipe from the database'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      recipe_id:
+        name: recipe_id
+        description: 'The ID of the recipe.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      recipe_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":1,"name":"Low Calorie","created_at":"2023-11-18T16:00:43.000000Z","updated_at":"2023-11-18T16:00:43.000000Z"}]}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/recipes/{recipe_id}/ingredients'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get all ingredients of a recipe from the database'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      recipe_id:
+        name: recipe_id
+        description: 'The ID of the recipe.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      recipe_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":1,"name":"Chicken Breast","is_vegan":0,"is_vegetarian":0,"created_at":"2023-11-18T16:00:43.000000Z","updated_at":"2023-11-18T16:00:43.000000Z"}]}'
         headers: []
         description: ''
         custom: []

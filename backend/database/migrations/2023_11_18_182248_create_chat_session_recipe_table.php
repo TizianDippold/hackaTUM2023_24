@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recipes_ingredients', function (Blueprint $table) {
+        Schema::create('chat_session_recipe', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('recipe_id');
-            $table->unsignedBigInteger('ingredient_id');
-            $table->foreign('recipe_id')
-                ->references('id')
-                ->on('recipes')
+
+            $table->foreignId('chat_session_id')
+                ->constrained()
                 ->cascadeOnDelete();
-            $table->foreign('ingredient_id')
-                ->references('id')
-                ->on('ingredients')
+            $table->foreignId('recipe_id')
+                ->constrained()
                 ->cascadeOnDelete();
+
             $table->timestamps();
+
+            $table->unique(['chat_session_id', 'recipe_id']);
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recipes_ingredients');
+        Schema::dropIfExists('chat_session_recipe');
     }
 };

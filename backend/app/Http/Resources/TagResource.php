@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ChatSessionResource extends JsonResource
+class TagResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +14,6 @@ class ChatSessionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'finalized' => $this->finalized,
-
-            'liked_recipes' => new RecipeCollection($this->whenLoaded('likedRecipes')),
-        ];
+        return parent::toArray($request);
     }
 }
