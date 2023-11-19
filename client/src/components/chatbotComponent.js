@@ -3,7 +3,8 @@ import MessageComponentBot from "@/components/messageComponentBot";
 import MessageComponentUser from "@/components/messageComponentUser";
 import React, {useState} from 'react';
 
-export default function ChatbotComponent() {
+export default function ChatbotComponent({sessionData}) {
+    const {id, finalized} = sessionData;
     const [userInput, setUserInput] = useState('');
     let chatId = 1;
     const [chatList, chatSetList] = useState(['How can I help you today?']);
