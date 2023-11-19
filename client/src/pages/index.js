@@ -65,7 +65,7 @@ export default function Home() {
                     className="rounded-sm object-cover h-31 mt-10 "/>
 
                 <span className="mt-10 font-bold text-xl text-active">Help us get to know you better</span>
-                <span>Sort recipes based on your preferences</span>
+                <span>Select up to five dishes you like</span>
             </div>
             <RecipeList onRecipeCountChange={handleRecipeCountChange}/>
             {showButton && (

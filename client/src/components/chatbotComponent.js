@@ -11,7 +11,7 @@ import {LuSendHorizonal} from "react-icons/lu";
 export default function ChatbotComponent({sessionData}) {
     const {id, finalized} = sessionData || {};
     const [userInput, setUserInput] = useState('');
-    const [chatList, chatSetList] = useState(['How can I help you today?']);
+    const [chatList, chatSetList] = useState(['Hello! I am the HelloFresh Assistant. How can I help you today?']);
     const router = useRouter()
 
     const url = 'https://hackatum23.moremaier.com/api/chat-sessions';

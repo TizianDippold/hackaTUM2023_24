@@ -53,7 +53,7 @@ const RecipeResults = ({sessionData}) => {
                     className="rounded-sm object-cover h-31 mt-10 "/>
 
                 <span className="mt-10 font-bold text-xl text-active"> {
-                    loading ? 'Loading...' : found ? 'Here are some recipes!' : 'Sorry, no recipes found!'
+                    loading ? 'HelloFresh Assistant is doing magic...' : found ? 'Your top recipes!' : 'Sorry, we could not find any recipes for you!'
                 }</span>
             </div>
             <div className="p-5">
