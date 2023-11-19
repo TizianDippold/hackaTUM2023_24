@@ -1,14 +1,13 @@
 import {Button} from "@material-tailwind/react";
 import MessageComponentBot from "@/components/messageComponentBot";
 import MessageComponentUser from "@/components/messageComponentUser";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import Dictaphone from "@/components/Dictaphone";
 
 export default function ChatbotComponent({sessionData}) {
     const {id, finalized} = sessionData;
     const [userInput, setUserInput] = useState('');
-    let chatId = 1;
     const [chatList, chatSetList] = useState(['How can I help you today?']);
     const router = useRouter()
 
@@ -17,7 +16,7 @@ export default function ChatbotComponent({sessionData}) {
 
     const fetchChatResponse = async () => {
         try {
-            const response = await fetch(`${url}/${chatId}/messages`, {
+            const response = await fetch(`${url}/${id}/messages`, {
                 method: "POST",
                 body: JSON.stringify({
                     message: userInput,
@@ -38,6 +37,14 @@ export default function ChatbotComponent({sessionData}) {
         }
     };
 
+    useEffect(() => {
+        if (sessionData == null) {
+            sessionData = {id: 90, finalized: false};
+        } else if (sessionData.id == null) {
+            sessionData.id = 90;
+        }
+    }, []);
+
 
     const handleInputChange = (e) => {
         setUserInput(e.target.value);
@@ -51,7 +58,9 @@ export default function ChatbotComponent({sessionData}) {
 
         setUserInput('');
         chatSetList(prevState => prevState.concat(botMsg));
-
+        console.log(responseData['data']['chat_session']);
+        console.log(sessionData[0])
+        console.log("hiii: " + responseData['data']['chat_session_id']);
         if (responseData['data']['chat_session']['finalized']) {
             await router.push('/results');
         }
@@ -61,7 +70,7 @@ export default function ChatbotComponent({sessionData}) {
         <>
             <div className="flex flex-col h-screen bg-gray-50">
                     <div className="flex justify-between bg-greenPastel p-4">
-                        <Dictaphone/>
+                        {/*<Dictaphone/>*/}
                         <img
                             src="https://img.hellofresh.com/f_auto,fl_lossy,q_auto/hellofresh_website/us/landing-pages/b2b/Hello_Fresh_White_Lockup_CMYK.png"
                             className="rounded-sm object-cover h-10 mt-2"/>
