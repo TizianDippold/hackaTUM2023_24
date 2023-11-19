@@ -2,12 +2,15 @@ import {Button} from "@material-tailwind/react";
 import MessageComponentBot from "@/components/messageComponentBot";
 import MessageComponentUser from "@/components/messageComponentUser";
 import React, {useState} from 'react';
+import Link from 'next/link';
+import {useRouter} from "next/router";
 
 export default function ChatbotComponent({sessionData}) {
     const {id, finalized} = sessionData;
     const [userInput, setUserInput] = useState('');
     let chatId = 1;
     const [chatList, chatSetList] = useState(['How can I help you today?']);
+    const router = useRouter()
 
     const url = 'https://hackatum23.moremaier.com/api/chat-sessions';
 
@@ -20,7 +23,8 @@ export default function ChatbotComponent({sessionData}) {
                     message: userInput,
                 }),
                 headers: {
-                    "Content-type": "application/json; charset=UTF-8"
+                    "Content-Type": "application/json; charset=UTF-8",
+                    "Accept": "application/json",
                 }
             });
 
@@ -47,12 +51,20 @@ export default function ChatbotComponent({sessionData}) {
 
         setUserInput('');
         chatSetList(prevState => prevState.concat(botMsg));
+
+        if (responseData['data']['chat_session']['finalized']) {
+            await router.push('/results');
+        }
     };
 
     return (
         <>
             <div className="flex flex-col h-screen bg-gray-50">
-                    <div className="flex items-center justify-between bg-green-400 p-8"></div>
+                    <div className="flex justify-between bg-greenPastel p-4">
+                        <img
+                            src="https://img.hellofresh.com/f_auto,fl_lossy,q_auto/hellofresh_website/us/landing-pages/b2b/Hello_Fresh_White_Lockup_CMYK.png"
+                            className="rounded-sm object-cover h-10 mt-2"/>
+                    </div>
                     <div className="flex flex-col space-y-2 p-4">
                         <ul>
                             {chatList.map((element, index) => {
@@ -65,7 +77,7 @@ export default function ChatbotComponent({sessionData}) {
                         </ul>
                     </div>
             </div>
-            <div className="flex items-center justify-end bg-gray-200 p-4 absolute bottom-0 w-screen">
+            <div className="sticky items-center justify-end bg-gray-200 p-4 absolute bottom-0 w-screen">
                 <div className="">
                     <input
                         type="text"
