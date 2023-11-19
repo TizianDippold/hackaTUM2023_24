@@ -58,14 +58,6 @@ export default function ChatbotComponent({sessionData}) {
         }
     };
 
-    useEffect(() => {
-        if (sessionData == null) {
-            sessionData = {id: 90, finalized: false};
-        } else if (sessionData.id == null) {
-            sessionData.id = 90;
-        }
-    }, []);
-
 
     const handleInputChange = (e) => {
         setUserInput(e.target.value);
