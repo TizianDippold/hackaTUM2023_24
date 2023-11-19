@@ -87,8 +87,14 @@ export default function ChatbotComponent({sessionData}) {
             msg.rate = 1.25;
             speechSynthesis.speak(msg);
             msg.onend = () => {
-                if (callback !== null) {
-                    callback();
+                if (responseData['data']['chat_session']['finalized']) {
+                    if (finalizeCallback !== null) {
+                        finalizeCallback();
+                    }
+                } else {
+                    if (callback !== null) {
+                        callback();
+                    }
                 }
             }
         }
@@ -99,9 +105,6 @@ export default function ChatbotComponent({sessionData}) {
         console.log(responseData);
         if (responseData['data']['chat_session']['finalized']) {
             await router.push('/results');
-            if (finalizeCallback !== null) {
-                finalizeCallback();
-            }
         }
     };
 
