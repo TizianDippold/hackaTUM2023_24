@@ -4,6 +4,7 @@ import MessageComponentUser from "@/components/messageComponentUser";
 import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import Dictaphone from "@/components/Dictaphone";
+import {useSession} from "@/pages/SessionContext";
 
 export default function ChatbotComponent({sessionData}) {
     const {id, finalized} = sessionData;
@@ -37,6 +38,26 @@ export default function ChatbotComponent({sessionData}) {
         }
     };
 
+    const fetchFinalizeResponse = async () => {
+        try {
+            const response = await fetch(`${url}/${id}/finalize`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                    "Accept": "application/json",
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     useEffect(() => {
         if (sessionData == null) {
             sessionData = {id: 90, finalized: false};
@@ -50,7 +71,10 @@ export default function ChatbotComponent({sessionData}) {
         setUserInput(e.target.value);
     };
 
-    const handleButtonClick = async () => {
+    const handleButtonSend = async () => {
+        if (userInput === '') {
+            return;
+        }
         chatSetList(prevState => prevState.concat(userInput));
 
         const responseData =  await fetchChatResponse(userInput);
@@ -65,6 +89,13 @@ export default function ChatbotComponent({sessionData}) {
             await router.push('/results');
         }
     };
+
+    const handleButtonFinalize = async () => {
+        const responseData = await fetchFinalizeResponse();
+        if (responseData['data']['finalized']) {
+            await router.push('/results');
+        }
+    }
 
     return (
         <>
@@ -87,7 +118,7 @@ export default function ChatbotComponent({sessionData}) {
                         </ul>
                     </div>
             </div>
-            <div className="sticky items-center justify-end bg-gray-200 p-4 absolute bottom-0 w-screen">
+            <div className="sticky items-center justify-end bg-gray-200 p-3 absolute bottom-0 w-screen">
                 <div className="">
                     <input
                         type="text"
@@ -97,8 +128,11 @@ export default function ChatbotComponent({sessionData}) {
                         className="bg-gray-200 px-2 py-1 mr-14"
                     />
 
-                    <Button onClick={handleButtonClick} className="right-1">
-                        Send
+                    <Button onClick={handleButtonSend} className="bg-gray-200 p-0 shadow-none">
+                        <img className="h-10 w-10 bg-gray-200" src="https://cdn.icon-icons.com/icons2/1509/PNG/512/mailsend_104372.png" alt="send"/>
+                    </Button>
+                    <Button onClick={handleButtonFinalize} className="bg-gray-200 p-0 shadow-none pl-3">
+                        <img className="h-10 w-10 bg-gray-200" src="https://icones.pro/wp-content/uploads/2021/02/icone-de-tique-ronde-grise.png" alt="finalize"/>
                     </Button>
                 </div>
             </div>
