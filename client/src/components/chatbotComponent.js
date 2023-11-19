@@ -3,6 +3,7 @@ import MessageComponentBot from "@/components/messageComponentBot";
 import MessageComponentUser from "@/components/messageComponentUser";
 import React, {useState} from 'react';
 import {useRouter} from "next/router";
+import Dictaphone from "@/components/Dictaphone";
 
 
 export default function ChatbotComponent({sessionData}) {
@@ -110,21 +111,22 @@ export default function ChatbotComponent({sessionData}) {
                     </div>
             </div>
             <div className="sticky items-center justify-end bg-gray-200 p-3 absolute bottom-0 w-screen">
-                <div className="pl-3">
+                <div className="pl-2">
                     <input
                         type="text"
                         value={userInput}
                         onChange={handleInputChange}
                         placeholder="Food..."
-                        className="bg-gray-200 pl-2 py-1 mr-8 "
+                        className="bg-gray-200 pl-2 py-1 mr-3"
                     />
 
                     <Button onClick={handleButtonSend} className="bg-gray-200 p-0 shadow-none">
-                        <img className="h-10 w-10 bg-gray-200" src="https://cdn.icon-icons.com/icons2/1509/PNG/512/mailsend_104372.png" alt="send"/>
+                        <img className="h-8 w-8 bg-gray-200" src="https://cdn.icon-icons.com/icons2/1509/PNG/512/mailsend_104372.png" alt="send"/>
                     </Button>
-                    <Button onClick={handleButtonFinalize} className="bg-gray-200 p-0 shadow-none pl-6">
-                        <img className="h-10 w-10 bg-gray-200" src="https://icones.pro/wp-content/uploads/2021/02/icone-de-tique-ronde-grise.png" alt="finalize"/>
+                    <Button onClick={handleButtonFinalize} className="bg-gray-200 p-0 shadow-none pl-3">
+                        <img className="h-8 w-8 bg-gray-200" src="https://icones.pro/wp-content/uploads/2021/02/icone-de-tique-ronde-grise.png" alt="finalize"/>
                     </Button>
+                    <Dictaphone/>
                 </div>
             </div>
         </>
