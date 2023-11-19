@@ -7,7 +7,7 @@ import Dictaphone from "@/components/Dictaphone";
 
 
 export default function ChatbotComponent({sessionData}) {
-    const {id, finalized} = sessionData;
+    const {id, finalized} = sessionData || {};
     const [userInput, setUserInput] = useState('');
     const [chatList, chatSetList] = useState(['How can I help you today?']);
     const router = useRouter()

@@ -1,6 +1,6 @@
 import '@/styles/globals.css'
 import Head from 'next/head';
-import {SessionProvider} from "@/pages/SessionContext";
+import {SessionProvider} from "@/SessionContext";
 
 export default function App({Component, pageProps}) {
     return (

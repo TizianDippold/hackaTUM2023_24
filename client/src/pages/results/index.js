@@ -1,5 +1,5 @@
 import RecipeResults from "@/components/recipeResults";
-import {useSession} from "@/pages/SessionContext";
+import {useSession} from "@/SessionContext";
 
 
 export default function ResultsPage({ children }) {

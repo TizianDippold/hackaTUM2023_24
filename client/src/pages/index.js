@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React, {useState} from "react";
 import { useRouter } from 'next/router';
 import RecipeList from "@/components/recipeList";
-import {useSession} from "@/pages/SessionContext";
+import {useSession} from "@/SessionContext";
 
 
 const inter = Inter({subsets: ['latin']})
