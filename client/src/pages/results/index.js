@@ -1,8 +1,10 @@
 import RecipeResults from "@/components/recipeResults";
+import {useSession} from "@/pages/SessionContext";
 
 
-export default function ChatBotPage({ children }) {
+export default function ResultsPage({ children }) {
+    const { sessionData } = useSession();
     return (
-        <RecipeResults/>
+        <RecipeResults sessionData={sessionData}/>
     );
 }

@@ -3,7 +3,8 @@ import React, {useEffect, useState} from 'react';
 import BigCard from "./bigCard";
 
 
-const RecipeResults = () => {
+const RecipeResults = ({sessionData}) => {
+    const {id, finalized} = sessionData;
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [found, setFound] = useState(false);
@@ -11,7 +12,7 @@ const RecipeResults = () => {
 
     const fetchChatResults = async () => {
         try {
-            const response = await fetch(`${url}/chat-sessions/1/results`, {
+            const response = await fetch(`${url}/chat-sessions/${id}/results`, {
                 headers: {
                     "Content-Type": "application/json; charset=UTF-8",
                     "Accept": "application/json",

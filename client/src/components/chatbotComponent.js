@@ -76,6 +76,7 @@ export default function ChatbotComponent({sessionData}) {
         setUserInput('');
         chatSetList(prevState => prevState.concat(botMsg));
 
+        console.log(responseData);
         if (responseData['data']['chat_session']['finalized']) {
             await router.push('/results');
         }
@@ -92,7 +93,6 @@ export default function ChatbotComponent({sessionData}) {
         <>
             <div className="flex flex-col h-screen bg-gray-50">
                     <div className="flex justify-between bg-greenPastel p-4">
-                        {/*<Dictaphone/>*/}
                         <img
                             src="https://img.hellofresh.com/f_auto,fl_lossy,q_auto/hellofresh_website/us/landing-pages/b2b/Hello_Fresh_White_Lockup_CMYK.png"
                             className="rounded-sm object-cover h-10 mt-2"/>
@@ -110,19 +110,19 @@ export default function ChatbotComponent({sessionData}) {
                     </div>
             </div>
             <div className="sticky items-center justify-end bg-gray-200 p-3 absolute bottom-0 w-screen">
-                <div className="">
+                <div className="pl-3">
                     <input
                         type="text"
                         value={userInput}
                         onChange={handleInputChange}
                         placeholder="Food..."
-                        className="bg-gray-200 px-2 py-1 mr-14"
+                        className="bg-gray-200 pl-2 py-1 mr-8 "
                     />
 
                     <Button onClick={handleButtonSend} className="bg-gray-200 p-0 shadow-none">
                         <img className="h-10 w-10 bg-gray-200" src="https://cdn.icon-icons.com/icons2/1509/PNG/512/mailsend_104372.png" alt="send"/>
                     </Button>
-                    <Button onClick={handleButtonFinalize} className="bg-gray-200 p-0 shadow-none pl-3">
+                    <Button onClick={handleButtonFinalize} className="bg-gray-200 p-0 shadow-none pl-6">
                         <img className="h-10 w-10 bg-gray-200" src="https://icones.pro/wp-content/uploads/2021/02/icone-de-tique-ronde-grise.png" alt="finalize"/>
                     </Button>
                 </div>
