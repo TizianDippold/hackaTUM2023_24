@@ -9,24 +9,23 @@ import {LuSendHorizonal} from "react-icons/lu";
 
 
 export default function ChatbotComponent({sessionData}) {
-    const {id, finalized} = sessionData;
+    const {id, finalized} = sessionData || {};
     const [userInput, setUserInput] = useState('');
     const [chatList, chatSetList] = useState(['How can I help you today?']);
     const router = useRouter()
 
     const url = 'https://hackatum23.moremaier.com/api/chat-sessions';
 
-    const textDetected = async (text) => {
-        setUserInput(text);
-        await handleButtonSend();
+    const textDetected = async (text, callback) => {
+        await handleSend(text, true, callback);
     };
 
-    const fetchChatResponse = async () => {
+    const fetchChatResponse = async (text) => {
         try {
             const response = await fetch(`${url}/${id}/messages`, {
                 method: "POST",
                 body: JSON.stringify({
-                    message: userInput,
+                    message: text,
                 }),
                 headers: {
                     "Content-Type": "application/json; charset=UTF-8",
@@ -71,14 +70,28 @@ export default function ChatbotComponent({sessionData}) {
         setUserInput(e.target.value);
     };
 
-    const handleButtonSend = async () => {
-        if (userInput === '') {
+    const handleSend = async (text, shouldSpeak = false, callback = null) => {
+        if (text === '') {
             return;
         }
-        chatSetList(prevState => prevState.concat(userInput));
+        chatSetList(prevState => prevState.concat(text));
 
-        const responseData =  await fetchChatResponse(userInput);
+        const responseData =  await fetchChatResponse(text);
         const botMsg = responseData['data']['content'];
+
+        if (shouldSpeak) {
+            let msg = new SpeechSynthesisUtterance(botMsg);
+            msg.lang = 'en-US';
+            msg.voice = speechSynthesis.getVoices().find(voice => voice.name === 'Samantha') || speechSynthesis.getVoices()[0];
+            msg.pitch = 1;
+            msg.rate = 1.25;
+            speechSynthesis.speak(msg);
+            msg.onend = () => {
+                if (callback !== null) {
+                    callback();
+                }
+            }
+        }
 
         setUserInput('');
         chatSetList(prevState => prevState.concat(botMsg));
@@ -87,6 +100,10 @@ export default function ChatbotComponent({sessionData}) {
         if (responseData['data']['chat_session']['finalized']) {
             await router.push('/results');
         }
+    };
+
+    const handleButtonSend = async () => {
+        await handleSend(userInput);
     };
 
     const handleButtonFinalize = async () => {

@@ -1,6 +1,6 @@
 
 import ChatbotComponent from "@/components/chatbotComponent";
-import {useSession} from "@/pages/SessionContext";
+import {useSession} from "@/SessionContext";
 
 export default function ChatBotPage({ children }) {
     const { sessionData } = useSession();

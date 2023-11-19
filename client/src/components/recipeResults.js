@@ -4,7 +4,7 @@ import BigCard from "./bigCard";
 
 
 const RecipeResults = ({sessionData}) => {
-    const {id, finalized} = sessionData;
+    const {id, finalized} = sessionData || {};
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [found, setFound] = useState(false);

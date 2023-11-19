@@ -24,7 +24,9 @@ const Dictaphone = () => {
                 if (result.confidence > 0 && text !== '') {
                     console.log(text);
                     recognition.stop();
-                    textDetected(text);
+                    textDetected(text, () => {
+                        recognition.start();
+                    });
                 }
             }
         }
