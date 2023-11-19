@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import {Button} from "@material-tailwind/react";
 import {TiMicrophoneOutline} from "react-icons/ti";
 
-const Dictaphone = () => {
+const Dictaphone = ({ textDetected }) => {
     const [isClient, setIsClient] = useState(false)
     const [isEnabled, setIsEnabled] = useState(false);
 
