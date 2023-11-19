@@ -44,7 +44,7 @@ class AskOpenAi
         $this->history = $history;
     }
 
-    public function ask(string $message): string
+    public function ask(string $message): void
     {
         $this->buildOldMessages();
 
@@ -79,8 +79,6 @@ class AskOpenAi
             'role' => OPENAI_ROLE_ASSISTANT,
             'content' => $responseMessage->content,
         ]);
-
-        return $responseMessage->content;
     }
 
     private function buildOldMessages(): void
